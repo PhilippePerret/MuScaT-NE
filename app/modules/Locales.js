@@ -51,7 +51,9 @@ const Locales = {
       // ['messages', 'things', 'ui']
       let l = ['messages', 'things', 'ui'];
       for(var aff of l){
-        Object.assign(MSG, JSON.parse(fs.readFileSync(`./app/locales/${lang}/${aff}.json`)))
+        var p = path.resolve(__dirname,'..','locales',lang,`${aff}.json`)
+        Object.assign(MSG, JSON.parse(fs.readFileSync(p)))
+        // Object.assign(MSG, JSON.parse(fs.readFileSync(`./app/locales/${lang}/${aff}.json`)))
       }
     }
 }
