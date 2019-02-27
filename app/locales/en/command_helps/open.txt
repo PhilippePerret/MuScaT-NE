@@ -1,0 +1,25 @@
+[UGLY ENGLISH TRANSLATION TO IMPROVE]
+
+Use this script to "open" something in MuScaT, starting with the
+analysis folder or the manual.
+
+  #{'./utils/open.rb manual'.jaune}
+
+USAGE
+-----
+  #{'./utils/open.rb ["]<what>["]'.jaune}
+
+  (avec l'alias `mus`)  > mus open [<what>]
+
+WHAT
+----
+
+  "What" can be :
+
+  #{'manual'.jaune}
+
+      To open the MuScaT manual in english.
+
+  #{'<analysis name>'.jaune}
+
+      To open the analysis with name "<analysis name>".

@@ -1,0 +1,46 @@
+{
+  "premiere":"virgule"
+
+, "new-analysis": "New analysis…"
+, "open-analysis": "Open analysis…"
+, "save-analysis": "Save analysis"
+, "export-pdf":     "Export to PDF"
+, "open-pdf":       "Open PDF file"
+
+, "Edit": "Edit"
+, "Paste": "Paste"
+
+, "Tag": "Tag"
+, "new-tag": "New Tag"
+, "del-tag": "Delete Tag"
+, "group-tags": "Group"
+, "ajust-tags": "Ajust"
+, "Selection": "Selected(s)"
+, "align-tag-top": "Align to top"
+, "align-tag-bottom": "Align to bottom"
+, "align-tag-left": "Align to left"
+, "align-tag-right": "Align to right"
+
+, "Help": "Help"
+, "Manual": "Manual"
+
+, "clipboard": "clipboard"
+, "Open": "Open"
+, "source-code": "Source code"
+, "the": "the"
+, "the-help": "the help"
+, "update": "Update"
+
+, "Ungroup":  "Ungroup"
+, "Group":    "Group"
+, "alignment": "Alignment"
+, "Align":     "Align"
+, "Arrange":    "Arrange"
+, "selected-tags": "selected tags"
+
+, "to-up":    "up"
+, "to-down":  "down"
+, "to-left":  "to the left"
+, "to-right": "to the right"
+
+}

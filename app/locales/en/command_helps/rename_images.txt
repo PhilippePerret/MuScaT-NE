@@ -1,0 +1,51 @@
+[UGLY ENGLISH TRANSLATION TO IMPROVE]
+
+This script lets you rename all the image files in a folder from
+1 to 1 starting with 0.
+
+USAGE
+-----
+  #{'./utils/rename_images.rb <path/to/folder>[ <affixe>][ <sort key>]'.jaune}
+
+  #{'path/to/folder'} is the relative or absolute path up to the
+  images folder.
+
+  The #{'`<affixe>`'.jaune} is the name without extname. For instance,
+  if affixe is set to 'my-image', image files will rename like:
+  'my-image-0.png', 'my-image-1.png', 'my-image-2.png', etc.
+  The extname depends on original file.
+
+  If the #{'<sort key>'.jaune} is set to `-name`, files are sorted by
+  their name rather by their creation date (default).
+
+TIP
+---
+
+  You can get easily the path/to/folder: type `./utils/rename_images.rb `
+  (with a space at the end) and drag and drop the folder from your
+  Finder to the Terminal Window (or your console).
+
+EXAMPLES
+--------
+
+  #{'> cd /Users/athome/Programs/MuScaT
+  > ./utils/rename_images.rb /Users/athome/Music/Analysis/myLastAnalysis/images'.jaune}
+
+      All images of `myLastAnalysis/images` folder will be renamed
+      in "image-X.png" in the creation date order.
+
+  #{'> dMuscat="/Users/athome/Programs/MuScaT"
+  > dImages="/Users/athome/Music/Analysis/Mozart/Sonate/images"
+  > cd $dMuscat
+  > ./utils/rename_images.rb $dImages mozart-sonata -name'.jaune}
+
+      All of the files of `Sonate/images` folder will be renamed
+      in "mozart-sonata-X.jpg" in the name order.
+
+      Note the second parameter ("mozart-sonata") which sets the
+      "affixe" of the names and the third parameter ("-name") which
+      modify the sort key.
+
+      Above, we used variables (`dMuscat`, 'dImages') for
+      convenience. They could be defined in your bash profile
+      to be used anywhere.

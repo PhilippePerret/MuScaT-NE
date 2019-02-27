@@ -1,0 +1,13 @@
+[UGLY ENGLISH TRANSLATION TO IMPROVE]
+
+Use this script to create a new analysis in the `_analyses_`
+folder of MuScaT.
+
+USAGE
+-----
+  #{'./utils/create.rb "<analysis name>"'.jaune}
+
+  With alias : #{'mus create "<analysis name>"'.jaune}
+
+  The `<analysis name>` is the name of the folder of the analysis. In
+  this name, spaces are replaced with underscore ('_').

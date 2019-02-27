@@ -1,0 +1,45 @@
+{
+  "premiere":"virgule"
+
+, "new-analysis": "Nouvelle analyse…"
+, "open-analysis": "Ouvrir l'analyse…"
+, "save-analysis": "Sauver l'analyse"
+, "export-pdf":     "Exporter vers PDF"
+, "open-pdf":       "Ouvrir le fichier PDF"
+
+, "Edit": "Édition"
+, "Paste": "Coller"
+
+, "Tag": "Tag"
+, "new-tag": "Nouveau Tag"
+, "del-tag": "Détruire le Tag"
+, "group-tags": "Grouper"
+, "ajust-tags": "Disposer régulièrement"
+, "Selection": "Sélectionnés"
+, "align-tag-top": "Aligner en haut"
+, "align-tag-bottom": "Aligner en bas"
+, "align-tag-left": "Aligner à gauche"
+, "align-tag-right": "Aligner à droite"
+
+, "Help": "Aide"
+, "Manual": "Manuel"
+
+, "clipboard": "presse-papier"
+, "Open": "Ouvrir"
+, "source-code": "code source"
+, "the": "les"
+, "the-help": "l’aide"
+, "update": "Actualiser"
+, "Ungroup":    "Dégrouper"
+, "Group":      "Grouper"
+, "alignment":  "Alignement"
+, "Align":      "Aligner"
+, "Arrange":    "Disposer régulièrement"
+, "selected-tags": "tags sélectionnés"
+
+, "to-up":    "en haut"
+, "to-down":  "en bas"
+, "to-left":  "à gauche"
+, "to-right": "à droite"
+
+}
