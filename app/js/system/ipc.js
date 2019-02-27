@@ -39,7 +39,6 @@ ipc.on('tags-loaded', (err, data) => {
     MuScaT.preload()
         .then(MuScaT.start_and_run.bind(MuScaT))
         .then(function(){if(TESTING){Tests.run()}});
-    console.log('Je vais ouvrir cette analyse.', fpath);
   }else{
     F.error("Il faut choisir un fichier.");
   }

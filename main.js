@@ -18,6 +18,9 @@ const path = require('path')
 const { Menu, MenuItem } = require('electron')
 const ipc = electron.ipcMain
 
+const IsMac     = process.platform === 'darwin'
+const IsNotMac  = !IsMac
+
 global.Analyser  = require('./app/modules/analyse.js')
 global.Locales   = require('./app/modules/Locales.js')
 const AppMenu   = require('./app/modules/menus.js')
@@ -33,7 +36,8 @@ global.t = (msg_id, msg_replacements) => {
 
 // var mainMenuBar = new Menu();
 
-app.on('ready', () => {
+app
+.on('ready', () => {
 
   // On charge la configuration (pour le moment, notamment pour :
   // - la dernière analyse (qui se charge automatiquement))
@@ -42,7 +46,7 @@ app.on('ready', () => {
 
   // On charge les locales
   // console.log('Langue :', process.env.LANG)
-  Locales.load(process.env.LANG.substring(0,2) || 'en');
+  Locales.load(process.env.LANG ? process.env.LANG.substring(0,2) : 'en');
 
   // Construction des menus
   // Note : on a besoin de `mainMenuBar` pour retrouver les menus par
@@ -54,7 +58,10 @@ app.on('ready', () => {
   const { width, height } = electron.screen.getPrimaryDisplay().workAreaSize
   // win = new BrowserWindow({ width, height })
   win = new BrowserWindow({
-    height: height, width: width
+    webPreferences: {
+      nodeIntegration: true // parce que j'utilise node.js dans les pages
+    }
+    , height: height, width: width
   });
 
   // Pour l'atteindre depuis le module Analyser
@@ -68,7 +75,11 @@ app.on('ready', () => {
   // Ajouter cette ligne pour voir les outils de développement
   // TODO Les mettre dans un menu
   // win.toggleDevTools();
-});
+})
+.on('window-all-closed', (event)=>{
+  if(IsNotMac){app.quit()}
+})
+;
 
 // Pour sauver l'analyse courante
 const AnalyserB = Analyser.save.bind(Analyser)

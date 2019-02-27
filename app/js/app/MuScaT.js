@@ -357,7 +357,6 @@ Object.defineProperties(MuScaT,{
           // this._images_folder = `_analyses_/${this.analyse_name}/images`;
           // Maintenant avec nodejs/Electron
           this._images_folder = `${this.analyse_folder_path}/images`;
-          console.log('Dossier images : ', this._images_folder);
         };
         return this._images_folder;
       }

@@ -86,12 +86,12 @@ const Analyser = {
     /**
      * Méthode appelée par le bouton 'Ouvrir' pour ouvrir une analyse musicale
      */
-  , open: (win) => {
-      var my = Analyser
+  , open: function(win) {
+      var my = this
 
       // Pour le moment, jusqu'à ce que ça fonctionne
       // Mettre `true` pour ne pas avoir à choisir l'analyse
-      if(true){
+      if(false){
         var p = '/Users/philippeperret/Programmation/MuScaT/_analyses_/SONATE-MOZARTInPlace';
         my.current = new Analyse({folder: p, window: win});
         if(my.current.is_valid()){return p}
@@ -111,7 +111,7 @@ const Analyser = {
         }
       }
     }
-  , askForAnalysisFolder: (win, msg) => {
+  , askForAnalysisFolder: function(win, msg) {
       var msg = msg || 'Dossier de l’analyse :' ;
       let openOptions = {
           defaultPath:  __dirname
@@ -130,8 +130,8 @@ const Analyser = {
      * souhaite faire une nouvelle version de son code. Pour le moment, on
      * fait toujours une nouvelle version.
      */
-  , save: (data, win) => {
-      var my = Analyser
+  , save: function(data, win) {
+      var my = this
       // console.log('-> Analyse#save');
       if(!my.current){
         // S'il n'y a pas d'analyse courante, il faut la créer (c'est-à-dire
@@ -148,7 +148,7 @@ const Analyser = {
      * Méthode appelée par le bouton 'Nouveau/New' pour créer une nouvelle
      * analyse.
      */
-  , initNew: (win) => {
+  , initNew: function(win) {
       var my = Analyser
       my.current = null;
       win.webContents.send('init-new-analysis')
@@ -156,10 +156,10 @@ const Analyser = {
     /**
      * Pour exporter l'analyse courante vers PDF
      */
-  , exportToPDF: () => {
+  , exportToPDF: function() {
       this.current.exportToPDF();
     }
-  , openPDF: ()=>{
+  , openPDF: function() {
       this.current.openPDF();
     }
 }

@@ -1,46 +1,51 @@
 {
-    "name": "MuScaT"
-  , "version": "0.0.1"
-  , "description": "Pour essai électron dans le but de faire de MuScaT une stand-alone application."
-  , "main": "main.js"
-  , "scripts": {
-      "start": "electron ."
-    , "test": "echo \"Error: no test specified\" && exit 1"
-    , "pack": "build --dir"
-    , "dist": "build -mwl"
-    , "postinstall": "electron-builder install-app-deps"
-  }
-  , "author": "Philippe Perret"
-  , "mail": "philippe.perret@yahoo.fr"
-  , "license": "GNU"
-  , "devDependencies": {
-        "electron": "latest"
-      , "electron-builder": "^20.38.5"
-    }
-  , "build":{
-        "appId": "app.musical.muscat"
-      , "dmg": {
-          "contents": [
-              {
-                  "x": 110
-                , "y": 150
-              }
-            , {
-                "x": 240
-              , "y": 150
-              , "type": "link"
-              , "path": "/Applications"
-            }
-          ]
-        }
-        , "linux": {
-            "target": [
-                "AppImage"
-              , "deb"
+    "name": "MuScaT",
+    "version": "0.1.0",
+    "description": "MuScaT une application de mise en forme des analyses musicales. Mais ses utilisations peuvent aller bien au-delà.",
+    "main": "main.js",
+    "scripts": {
+          "start": "electron ."
+        , "test": "echo \"Error: no test specified\" && exit 1"
+        , "pack": "build --dir"
+        , "dist": "electron-builder ."
+        , "dist-all": "electron-packager . --all"
+        , "dist-win": "electron-packager . --platform=\"win32\" -arch=\"x64\""
+        , "dist-mac": "electron-packager . --platform=\"darwin\" -arch=\"x64\""
+        , "postinstall": "electron-builder install-app-deps"
+    },
+    "author": "Philippe Perret",
+    "mail": "philippe.perret@yahoo.fr",
+    "license": "GNU",
+    "devDependencies": {
+        "electron": "^4.0.6"
+    },
+    "build": {
+        "appId": "app.musical.muscat",
+        "dmg": {
+            "contents": [
+                {
+                    "x": 110,
+                    "y": 150
+                },
+                {
+                    "x": 240,
+                    "y": 150,
+                    "type": "link",
+                    "path": "/Applications"
+                }
             ]
-          }
-        , "nsis": {
+        },
+        "linux": {
+            "target": [
+                "AppImage",
+                "deb"
+            ]
+        },
+        "nsis": {
             "allowToChangeInstallationDirectory": true
-          }
+        }
+    },
+    "dependencies": {
+        "jquery": "^3.3.1"
     }
 }

@@ -31,7 +31,7 @@ const AppMenu = {
       }
     }
 
-  , MULTISEL_MENUS: ['align-tag-top','align-tag-bottom','align-tag-left','align-tag-right', 'ajust-tags','group-tags', 'group-multiselect']
+  , MULTISEL_MENUS: ['align-tag-top','align-tag-bottom','align-tag-left','align-tag-right', 'ajust-tags','group-tags']
   , setMenusSelectionMultiple: function(on){
       var my = this
       my[on?'enableMenus':'disableMenus'](my.MULTISEL_MENUS)
@@ -131,7 +131,7 @@ const AppMenu = {
                   label: t('Selection')
                 , type: 'submenu'
                 , id: 'group-multiselect'
-                , enabled: false // pas pour mac
+                // , enabled: false // pas pour mac
                 , submenu: [
                     {
                         label: t('align-tag-top')

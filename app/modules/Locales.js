@@ -47,7 +47,7 @@ const Locales = {
     /**
      * Méthode qui charge les fichiers de langue (fichier json)
      */
-  , load: (lang) => {
+  , load: function(lang) {
       // ['messages', 'things', 'ui']
       let l = ['messages', 'things', 'ui'];
       for(var aff of l){
