@@ -8,48 +8,23 @@
    // Note : `user_name` permet de garder la trace du nom de l'option que l'user
    // à employée, en cas de "aka" pour lui redonner la même.
      'animation speed':             {boolean: false, value: null, default: 50, user_name: null}
-   , 'vitesse animation':           {aka: 'animation speed'}
-   , 'code':                        {boolean: true, value: false, default: true /* toujours, dans Electron*/}
-   , 'code beside':                 {aka: 'code'}
-   , 'code à côté':                 {aka: 'code'}
-   , 'code no option':              {boolean: true, value: null}
-   , 'code no options':             {aka: 'code no option'}
-   , 'code sans option':            {aka: 'code no option'}
-   , 'code sans options':           {aka: 'code no option'}
-   , 'crop image':                  {boolean: true, value: false}
-   , 'images PNG':                  {boolean: true, value: false} // true si on veut des noms de fichier ne png (pour convert par exemple)
-   , 'découpe image':               {aka: 'crop image'}
    , 'coordonates':                 {boolean: true, value: false} // afficher les coordonnées lors des déplacementss
-   , 'repères':                     {aka: 'lines of reference'}
-   , 'reperes':                     {aka: 'lines of reference'}
-   , 'guides':                      {aka: 'lines of reference'}
    , 'lang':                        {boolean: false, value: null, default: 'fr'}
-   , 'langue':                      {aka: 'lang'}
-   , 'language':                    {aka: 'lang'}
-   , 'langage':                     {aka: 'lang'}
    , 'lines of reference':          {boolean: true, value: false} // si true, affiche les lignes de guide
-   , 'espacement images':           {aka: 'space between scores'}
    , 'space between scores':        {boolean: false, value: null, default: 10}
    , 'top first score':             {boolean: false, value: null}
-   , 'marge haut':                  {aka: 'top first score'}
    , 'left margin':                 {boolean: false, value: null}
-   , 'marge gauche':                {aka: 'left margin'}
    , 'horizontal line offset':      {boolean: false, value: null, default: 46}
-   , 'position repère vertical':    {aka: 'vertical line offset'}
-   , 'position repère horizontal':  {aka: 'horizontal line offset'}
    , 'theme':                       {boolean: false, value: null}
    , 'visor':                       {boolean: true, value: null, default: false}
-   , 'viseur':                      {aka: 'visor'}
    , 'vertical line offset':        {boolean: false, value: null, default: 42}
    // TOUTES LES DIMENSIONS
+   // TODO: Mettre en préférences
    , 'cadence size':                {boolean: false, value: null}
    , 'chord size':                  {boolean: false, value: null}
    , 'degree size':                 {boolean: false, value: null}
-   , 'degre size':                  {aka: 'degree size'}
    , 'harmony size':                {boolean: false, value: null}
-   , 'harmonie size':               {aka: 'harmony size'}
    , 'measure size':                {boolean: false, value: null}
-   , 'mesure size':                 {aka:'measure size'}
    , 'modulation size':             {boolean: false, value: null}
    , 'rectangle selection':         {boolean: true, value: null, default: false}
    , 'part size':                   {boolean: false, value: null}

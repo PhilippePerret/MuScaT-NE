@@ -7,14 +7,11 @@
           "start": "electron ."
         , "test": "echo \"Error: no test specified\" && exit 1"
         , "dmg-osx": "electron-installer-dmg dist/osx/MuScaT-darwin-x64/MuScaT.app dist/MuScaT --icon=assets/build/osx/icon.icns --icon-size=120"
-        , "pack:osx": "electron-packager . $npm_package_productName --out=dist/osx --platform=darwin --arch=x64 --icon=assets/build/osx/icon.icns"
-        , "pack:win32": "electron-packager . $npm_package_productName --out=dist/win --platform=win32 --arch=ia32"
-        , "pack:win64": "electron-packager . $npm_package_productName --out=dist/win --platform=win32 --arch=x64 --icon=assets/build/win/icon.ico"
-        , "pack": "npm run pack:osx && npm run dmg-osx && npm run pack:win32 && npm run pack:win64"
-        , "dist-win": "electron-packager . --platform=\"win32\" -arch=\"x64\""
-        , "dist-mac": "electron-packager . --platform=\"darwin\" -arch=\"x64\" && npm dmg-osx"
-        , "dist": "electron-builder ."
-        , "dist-all": "electron-packager . --all"
+        , "pack:osx": "electron-packager . $npm_package_productName --overwrite --out=dist/osx --platform=darwin --arch=x64 --prune=true --icon=assets/build/osx/icon.icns"
+        , "pack:win32": "electron-packager . $npm_package_productName --overwrite --asar=true --out=dist/win --platform=win32 --arch=ia32"
+        , "pack:win64": "electron-packager . $npm_package_productName --overwrite --asar=true --out=dist/win --platform=win32 --arch=x64 --icon=assets/build/win/icon.ico"
+        , "pack:linux": "electron-packager . $npm_package_productName --overwrite --asar=true --out=dist/linux --platform=linux --arch=x64 --icon=assets/build/logo-icon-carre.png --prune=true"
+        , "pack": "npm run pack:osx && npm run dmg-osx && npm run pack:linux && npm run pack:win32 && npm run pack:win64"
     }
     , "author": "Philippe Perret",
     "mail": "philippe.perret@yahoo.fr",

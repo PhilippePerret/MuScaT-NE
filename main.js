@@ -58,10 +58,11 @@ app
   const { width, height } = electron.screen.getPrimaryDisplay().workAreaSize
   // win = new BrowserWindow({ width, height })
   win = new BrowserWindow({
-    webPreferences: {
-      nodeIntegration: true // parce que j'utilise node.js dans les pages
-    }
+      webPreferences: {
+        nodeIntegration: true // parce que j'utilise node.js dans les pages
+      }
     , height: height, width: width
+    , icon: path.resolve(__dirname,'assets','build','osx','logo-icon.png')
   });
 
   // Pour l'atteindre depuis le module Analyser
