@@ -1,0 +1,180 @@
+body {
+  margin: 0;
+  padding: 0;
+  width: 21.01cm;
+  background-color: #DDDDDD;
+}
+
+a, a:link, a:hover, a:visited {
+  text-decoration: none;
+  color: #000099;
+  font-family: Arial, Helvetica;
+}
+
+.displayed {display: block;}
+.undisplayed {display: none;}
+
+span#analyse_name {
+  position: fixed;
+  display: block;
+  width: 188mm;
+  text-align:right;
+  top: 4px;
+  opacity: 0.3;
+  font-size: 12pt;
+  font-style: italic;
+}
+
+section#code-column ul {
+  margin: 0;
+}
+section#footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  color: white;
+  background-color: black;
+  padding: 2px 8px;
+  z-index: 500;
+}
+section#footer span#message {
+  font-family: 'Courier New', 'Courier';
+  font-size: 11pt;
+}
+
+section#footer #message.warning {
+  color: red;
+  background-color: #FFCCCC;
+}
+section#footer #message.notice {
+  color: inherit;
+  background-color: inherit;
+}
+
+
+button, select, select option {
+  font-size: inherit;
+}
+
+.right {text-align: right;}
+.center {text-align: center;}
+
+
+section#code-column {
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 40%;
+  max-width: 40%;
+  min-width: 40%;
+  z-index: 500; /* rappel : lignes repère 500 */
+}
+
+/* ---------------------------------------------------------------------
+Le UL qui contient les LITags
+*/
+div#div-ultags {
+
+}
+div#div-ultags ul#ultags {
+  margin-bottom: 0;
+}
+div#div-ultags div#div-ultags-buttons {
+  text-align: left;
+  border-width: 0 1px 1px 1px;
+  border-style: solid;
+  border color: grey;
+}
+div#div-ultags div#div-ultags-buttons button.plus-moins {
+  background-color: #CCCCCC;
+  width: 36px;
+  height: 36px;
+  text-align: center;
+  margin:0;
+  margin-right: -4px;
+  padding:0;
+  border: 1px solid grey;
+  font-family: Arial, Helvetica;
+}
+div#div-ultags div#div-ultags-buttons div.buttons-block {
+  display: inline-block;
+  vertical-align:top;
+  margin-right: 1em;
+  background-color: transparent;
+}
+div#div-ultags div#div-ultags-buttons button:active {
+  background-color: green;
+  color: white;
+}
+div#div-ultags div#div-ultags-buttons button.normal {
+  border: 1px solid #777777;
+  border-radius: .5em;
+  margin-left: 1em;
+}
+
+div#div-ultags div#div-ultags-buttons div#anim-buttons {
+  /* border: 1px solid black; */
+  border-radius: 0.3em;
+}
+div#div-ultags div#div-ultags-buttons div#anim-buttons img{
+  width: 34px;
+  height: 34px;
+  border: 1px solid black;
+  margin: 0;
+  padding: 0;
+}
+div#div-ultags div#div-ultags-buttons div#anim-buttons img#anim-btn-rewind {
+  margin-right: -5px;
+}
+div#div-ultags div#div-ultags-buttons div#anim-buttons img#anim-btn-play {
+  margin-left: -5px;
+}
+
+
+/* --------------------------------------------------------------------- */
+/* Lignes de référence */
+
+div.refline {
+  position: fixed;
+  background-color: green;
+  /* Au-dessus de tout sauf des dialogues */
+  z-index: 400;
+}
+div#refline_h {
+  width:4px;
+  height: 4000px;
+  top: -10px;
+  left: 20px;
+}
+div#refline_v {
+  height:4px;
+  width: 200%;
+  left: -10px;
+  top: 20px;
+}
+
+fieldset#fs_boutons {
+
+}
+fieldset#fs_boutons button {
+  display: block;
+}
+
+/* Juste une "viseur", pour le développement, pour voir où on clique,
+  ou plus exactement les coordonnées x/y comprises */
+div#visor {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background-color: orange;
+  z-index: 3000;
+}
+
+/* --------------------------------------------------------------------- */
+/* Pour la sélection multiple */
+div.rectangle-selection {
+  position: absolute;
+  border: 1px dashed green;
+  background-color: rgba(200, 255, 200, 0.3);
+  z-index: 4000;
+}

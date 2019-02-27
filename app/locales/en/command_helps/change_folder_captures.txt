@@ -1,0 +1,46 @@
+[UGLY ENGLISH TRANSLATION TO IMPROVE]
+
+This script lets you define the folder which will hold the screen
+shots.
+
+USAGE
+-----
+  #{'./change_folder_captures.rb[ ./path/to/folder][ options][-h]'.jaune}
+
+  The `path/to/folder` path becomes the receiver of all
+  captures. If not provided, the default folder (desktop), is
+  used.
+
+OPTIONS
+-------
+
+  #{'-mk'.jaune}
+      The folder will be built if it doesn't exist.
+
+  #{'-h'.jaune} or #{'--help'.jaune}
+      To display this help.
+
+TIP
+---
+
+  To set the path, you can simply drag and drop the folder on the
+  Terminal window, juste after `./utils/change_folder_captures.rb `.
+  Don't forget the space at the end before dragging.
+
+EXAMPLES
+--------
+
+  #{'> cd /Users/athome/Programs/MuScaT
+  > ./utils/change_folder_captures.rb /Users/athome/Music/Analysis/ -mk'.jaune}
+
+      The `~/Music/Analysis` folder becomes the folder where
+      captures will be saved.
+      The folder is built if it doesn't exist (option `-mk`).
+
+  #{'> ./utils/change_folder_captures.rb'.jaune}
+
+      The captures folder is reset to its default value (Desktop).
+
+  #{'> ./utils/change_folder_captures.rb -h'.jaune}
+
+      Display this help.

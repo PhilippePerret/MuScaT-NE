@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>MuScaT</title>
+    <link rel="stylesheet" href="./css/common.css" />
+    <link rel="stylesheet" href="./css/ui.css" />
+    <link rel="stylesheet" href="./css/print.css" />
+    <link rel="stylesheet" href="./css/tags.css" media="screen,print" />
+  </head>
+  <body>
+    <!-- SECTION POUR METTRE TOUS LES TAGS -->
+    <section id="tags"></section>
+    <!-- Nom de l'application, flottant -->
+    <span id="analyse_name"></span>
+
+    <!-- Les lignes repères (masquées sans l'option 'repères') -->
+    <div id="refline_h" class="refline" style="display:none;"></div>
+    <div id="refline_v" class="refline" style="display:none;"></div>
+
+    <!-- Colonne DROITE avec le code -->
+    <section id="code-column">
+
+      <div id="div-ultags">
+        <!-- La liste de lignes de code -->
+        <ul id="ultags"></ul>
+
+        <!-- Les boutons fonctionnant avec le code -->
+        <div id="div-ultags-buttons">
+
+          <!-- Les boutons pour ajouter/supprimer des tags -->
+          <div class="buttons-block">
+            <button type="button" id="ultags-btn-plus" class="plus-moins" onclick="$.proxy(ULTags,'addTag')()">➕</button>
+            <button type="button" id="ultags-btn-moins" class="plus-moins" onclick="$.proxy(ULTags,'removeTag')()">➖</button>
+          </div>
+
+          <!-- Les boutons pour l'animation -->
+          <div id="anim-buttons" class="buttons-block" style="display:none;">
+            <img id="anim-btn-rewind" src="./images/anim/btn-rewind.jpg" alt="Rewind" onclick="Anim.onRewind.bind(Anim)()" />
+            <img id="anim-btn-stop" src="./images/anim/btn-stop.jpg" alt="Stop/Play" onclick="Anim.onStop.bind(Anim)()" />
+            <img id="anim-btn-play" src="./images/anim/btn-pause.jpg" alt="Pause" onclick="Anim.onTogglePause.bind(Anim)()" />
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <section id="footer">
+      <span id="message">&nbsp;</span>
+    </section>
+
+    <script>window.$ = window.jQuery = require('./js/system/jquery-min.js');</script>
+    <!-- <script>window.$ = window.jQuery = require('jquery');</script> -->
+    <!-- Dossier système -->
+    <!-- <script>if (typeof module === 'object') {window.tempModule = module; module = undefined;}</script> -->
+    <script src="./js/system/jquery-min.js"></script>
+    <script src="./js/system/jquery-ui-min.js"></script>
+    <script src="./js/system/ipc.js"></script>
+    <script src="./js/system/Flash.js"></script>
+    <script src="./js/system/Cook.js"></script>
+    <script src="./js/system/Debug.js"></script>
+    <script src="./js/system/miniClasses.js"></script>
+    <script src="./js/system/utils.js"></script>
+    <!-- Modules application -->
+    <script type="text/javascript" src="./js/app/constants.js"></script>
+    <script type="text/javascript" src="./js/app/Locales.js"></script>
+    <script type="text/javascript" src="./js/app/Errors.js"></script>
+    <script type="text/javascript" src="./js/app/Historique.js"></script>
+    <script type="text/javascript" src="./js/app/Mover.js"></script>
+    <script type="text/javascript" src="./js/app/Theme.js"></script>
+    <script type="text/javascript" src="./js/app/MEvents.js"></script>
+    <script type="text/javascript" src="./js/app/Options.js"></script>
+    <script type="text/javascript" src="./js/app/ui.js"></script>
+    <script type="text/javascript" src="./js/app/ULTags.js"></script>
+    <script type="text/javascript" src="./js/app/LITag.js"></script>
+    <script type="text/javascript" src="./js/app/main.js"></script>
+    <script type="text/javascript" src="./js/app/MuScaT.js"></script>
+    <script type="text/javascript" src="./js/app/Tag.js"></script>
+    <script type="text/javascript" src="./js/app/TagsGroup.js"></script>
+    <script type="text/javascript" src="./js/app/CTags.js"></script>
+    <script type="text/javascript" src="./js/app/Page.js"></script>
+    <!-- À définir plus tard -->
+    <script src="./js/system/LANG.js"></script>
+
+
+    <!-- After script imports -->
+    <!-- <script>if (window.tempModule) module = window.tempModule;</script> -->
+
+  </body>
+</html>
