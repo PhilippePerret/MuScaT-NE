@@ -79,3 +79,7 @@ IPC
   .on('ajust-tags', (event) => {
     CTags.repartir_selected.bind(CTags)()
   })
+  .on('toggle-reference-lines', (event) => {
+    // Pour afficher/masquer les lignes de références
+    Page.toggle_lines_of_reference();
+  })

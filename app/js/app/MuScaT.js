@@ -146,12 +146,6 @@ const MuScaT = {
 
         // Dans tous les cas, on construit les liTags
         ULTags.build();
-        // Si l'option 'lines of reference' a été activée, il faut
-        // ajouter les deux lignes repères
-        if(Options.get('lines of reference')){
-          Page.build_lines_of_reference();
-          Page.assure_lines_draggable();
-        }
         // Si c'est une animation, on est prêt à la jouer
         if(M.animated){M.run_animation()};
         ok();

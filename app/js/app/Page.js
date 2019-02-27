@@ -180,22 +180,27 @@ const Page = {
    * Affiche la ligne horizontale et la ligne verticale qui permettent
    * d'aligner des éléments.
    */
-   , build_lines_of_reference: function(){
-       $('#refline_h').show();
-       $('#refline_v').show();
-       $('#refline_h').draggable({axis: 'x', stop:function(ev,ui){Cook.set('hline-left', ui.helper.offset().left)}});
-       $('#refline_v').draggable({axis: 'y', stop:function(ev,ui){Cook.set('vline-top', ui.helper.offset().top)}});
+    , toggle_lines_of_reference: function(){
+        if($('#refline_h').is(':visible')){
+          $('#refline_h').hide();
+          $('#refline_v').hide();
+          return
+        }
+        $('#refline_h').show();
+        $('#refline_v').show();
+        $('#refline_h').draggable({axis: 'x', stop:function(ev,ui){Cook.set('hline-left', ui.helper.offset().left)}});
+        $('#refline_v').draggable({axis: 'y', stop:function(ev,ui){Cook.set('vline-top', ui.helper.offset().top)}});
 
-       // La position des lignes repères peut être explicitement définie
-       // dans le fichier _tags_.js (option), ou par cookie, après un premier
-       // déplacement. La définition dans le fichier _tags_.js est toujours
-       // prioritaire.
-       var vpos = Options.get('vertical line offset') || Cook.get('vline-top');
-       if(vpos){$('#refline_v').css('top', vpos + 'px')};
-       var hpos = Options.get('horizontal line offset') || Cook.get('hline-left');
-       if(hpos){$('#refline_h').css('left', hpos + 'px')};
-
-     }
+        // La position des lignes repères peut être explicitement définie
+        // dans le fichier _tags_.js (option), ou par cookie, après un premier
+        // déplacement. La définition dans le fichier _tags_.js est toujours
+        // prioritaire.
+        var vpos = Options.get('vertical line offset') || Cook.get('vline-top');
+        if(vpos){$('#refline_v').css('top', vpos + 'px')};
+        var hpos = Options.get('horizontal line offset') || Cook.get('hline-left');
+        if(hpos){$('#refline_h').css('left', hpos + 'px')};
+        this.assure_lines_draggable();
+      }
 
   , assure_lines_draggable: function(){
       $('#refline_h').css('position','fixed');

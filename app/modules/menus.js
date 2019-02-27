@@ -178,6 +178,19 @@ const AppMenu = {
           ]
         }
         , {
+            label: t('Options')
+          , type: 'submenu'
+          , submenu: [
+                {
+                    label: t('Reference-lines')
+                  , type: 'checkbox'
+                  , checked: false
+                  , enabled: true
+                  , click: () => {win.webContents.send('toggle-reference-lines')}
+                }
+            ]
+          }
+        , {
             label: t('Help')
           , role: 'help'
           , submenu: [
