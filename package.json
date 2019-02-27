@@ -1,6 +1,6 @@
 {
     "name": "MuScaT"
-  , "version": "0.1.0"
+  , "version": "0.1.1"
   , "description": "MuScaT est une application de mise en forme des analyses musicales. Mais ses utilisations peuvent aller bien au-delà."
   , "main": "main.js"
   , "scripts": {
