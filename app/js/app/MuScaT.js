@@ -339,7 +339,7 @@ const MuScaT = {
 Object.defineProperties(MuScaT,{
   // Langue de l'application (on la change avec l'option 'lang'/'langue')
   lang:{
-    get: function(){ return Options.get('lang').toLowerCase() } // 'fr par défaut'
+    get: function(){ return Prefs.get('lang').toLowerCase() } // 'fr par défaut'
   }
     /**
      * Le dossier contenant les images de l'analyse courante

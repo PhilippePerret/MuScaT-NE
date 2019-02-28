@@ -1,14 +1,15 @@
 /* Pour régler les dimensions */
 body {
   font: caption;
-  font-size: 16px;
+}
+body * {
+  font-size: 17.5px;
 }
 /* Communs */
 section#onglets-panels,
 section#panels {
   position: fixed;
   top: 0;
-  font-size: inherit;
 }
 
 body {
@@ -24,13 +25,11 @@ section#onglets-panels {
 section#onglets-panels ul {
   list-style: none;
   font: caption;
-  font-size: inherit;
   padding: 1.2em 0;
   margin: 0;
 }
 section#onglets-panels ul li {
   padding: 0.32em 1em;
-  font-size: 1.2em;
 }
 section#onglets-panels ul li:hover {
   background-color: #4286f4; /* bleu-mac */
@@ -57,7 +56,18 @@ section#panels .panel div.div-pref {
   padding: 0.5em 1em;
   font: inherit;
 }
-
+section#panels .panel div.div-pref > div {
+  padding: 0.2em 0;
+}
+section#panels .panel div.div-pref label {
+  display: inline-block;
+}
+section#panels .panel div.div-pref label.moyen {
+  width: 200px;
+}
+section#panels .panel div.div-pref label.long {
+  width: 400px;
+}
 section#footer {
   position: fixed;
   bottom: 0;

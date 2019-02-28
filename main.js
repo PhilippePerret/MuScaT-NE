@@ -86,6 +86,14 @@ app
 .on('window-all-closed', (event)=>{
   if(IsNotMac){app.quit()}
 })
+.on('quit', (event) => {
+  if (MainPrefs.win){
+    // <= La fenêtre des préférences a été ouverte
+    // => Il faut la détruire
+    console.log("Fermeture de la fenêtre des préférences au quit")
+    MainPrefs.win.close()
+  }
+})
 ;
 
 // Pour sauver l'analyse courante

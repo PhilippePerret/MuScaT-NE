@@ -9,7 +9,6 @@
    // à employée, en cas de "aka" pour lui redonner la même.
      'animation speed':             {boolean: false, value: null, default: 50, user_name: null}
    , 'coordonates':                 {boolean: true, value: false} // afficher les coordonnées lors des déplacementss
-   , 'lang':                        {boolean: false, value: null, default: 'fr'}
    , 'lines of reference':          {boolean: true, value: false} // si true, affiche les lignes de guide
    , 'space between scores':        {boolean: false, value: null, default: 10}
    , 'top first score':             {boolean: false, value: null}
@@ -18,18 +17,7 @@
    , 'theme':                       {boolean: false, value: null}
    , 'visor':                       {boolean: true, value: null, default: false}
    , 'vertical line offset':        {boolean: false, value: null, default: 42}
-   // TOUTES LES DIMENSIONS
-   // TODO: Mettre en préférences
-   , 'cadence size':                {boolean: false, value: null}
-   , 'chord size':                  {boolean: false, value: null}
-   , 'degree size':                 {boolean: false, value: null}
-   , 'harmony size':                {boolean: false, value: null}
-   , 'measure size':                {boolean: false, value: null}
-   , 'modulation size':             {boolean: false, value: null}
-   , 'rectangle selection':         {boolean: true, value: null, default: false}
-   , 'part size':                   {boolean: false, value: null}
    , 'shuffle tests':               {boolean: true, value: null, default: true}
-   , 'text size':                   {boolean: false, value: null}
  }
 
  // pour ajouter une option

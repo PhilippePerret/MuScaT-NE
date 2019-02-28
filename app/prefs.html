@@ -2,7 +2,6 @@
 <html lang="fr" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title><script>document.write('Préférences')</script></title>
     <link rel="stylesheet" href="./css/prefs.css" media="screen" />
     <link rel="stylesheet" href="./css/common.css" media="screen" />
   </head>
@@ -15,9 +14,10 @@
 
     <section id="onglets-panels">
       <ul>
-        <li id="o-panel-general">Général</li>
-        <li id="o-panel-aspect">Aspect</li>
-        <li id="o-panel-outils">Outils</li>
+        <li id="o-panel-general" class="locale">...</li>
+        <li id="o-panel-aspect" class="locale">...</li>
+        <li id="o-panel-outils" class="locale">...</li>
+        <li id="o-panel-options" class="locale">...</li>
       </ul>
     </section>
     <section id="panels">
@@ -25,38 +25,80 @@
       <!-- PANNEAU GÉNÉRAL -->
       <div id="panel-general" class="panel">
         <div class="div-pref">
-          <label>Dossier des analyses (par défaut)</label>
-          <input type="text" id="analysis_folder" name="analysis_folder" value="" />
-          <button type="button">Choisir…</button>
+          <label for="default_analysis_folder" class="locale" id="label-default-analysis-folder">...</label>
+          <span id="default_analysis_folder"></span>
+          <button id="btn-choose-analysis-folder" type="button" class="locale">...</button>
         </div>
       </div>
 
       <!-- PANNEAU DE L'ASPECT -->
       <div id="panel-aspect" class="panel">
         <div class="div-pref">
-          <label for="theme">Thème </label>
-          <select class="" name="theme" id="theme">
-            <!-- Sera rempli automatiquement -->
-          </select>
+          <label id="label-theme" for="theme" class="moyen locale">...</label>
+          <select id="theme"></select>
         </div>
         <div class="div-pref">
-          <label for="modulation_fsize">Taille des modulations</label>
-          <input type="text" id="modulation_fsize" name="modulation_fsize" value="" /> (px)
+          <div>
+            <label id="label-acc-fsize" class="long locale" for="chord_fsize">...</label>
+            <select class="sizes-select" id="chord_fsize"></select> (px)
+          </div>
+          <div>
+            <label id="label-har-fsize" class="long locale" for="harmony_fsize">...</label>
+            <select class="sizes-select" id="harmony_fsize"></select> (px)
+          </div>
+          <div>
+            <label id="label-cad-fsize" class="long locale" for="cadence_fsize">...</label>
+            <select class="sizes-select" id="cadence_fsize"></select> (px)
+          </div>
+          <div>
+            <label id="label-mod-fsize" class="long locale" for="modulation_fsize">...</label>
+            <select class="sizes-select" id="modulation_fsize"></select> (px)
+          </div>
+          <div>
+            <label id="label-par-fsize" class="long locale" for="part_fsize">...</label>
+            <select class="sizes-select" id="part_fsize"></select> (px)
+          </div>
+          <div>
+            <label id="label-mes-fsize" class="long locale" for="measure_fsize">...</label>
+            <select class="sizes-select" id="measure_fsize"></select> (px)
+          </div>
+          <div>
+            <label id="label-deg-fsize" class="long locale" for="degree_fsize">...</label>
+            <select class="sizes-select" id="degree_fsize"></select> (px)
+          </div>
+          <div>
+            <label id="label-tex-fsize" class="long locale" for="text_fsize">...</label>
+            <select class="sizes-select" id="text_fsize"></select> (px)
+          </div>
         </div>
       </div>
 
       <!-- PANNEAU DES OUTILS -->
       <div id="panel-outils" class="panel">
         <div class="div-pref">
-          <input type="checkbox" name="references_lines" id="references_lines" value="">
-          <label for="references_lines">Afficher les lignes de références</label>
+          <input type="checkbox" id="references_lines" value="">
+          <label id="references-lines" class="locale moyen" for="references_lines">...</label>
         </div>
         <div class="div-pref">
-          <input type="checkbox" name="visor" id="visor" value="">
-          <label for="visor" class="locale" id="show-visor"></label>
+          <input type="checkbox" id="visor" value="">
+          <label for="visor" class="locale moyen" id="show-visor"></label>
+        </div>
+      </div>
+
+      <!-- PANNEAU DES OPTIONS -->
+      <div id="panel-options" class="panel">
+        <div class="div-pref">
+          <label for="lang" id="lab-lang" class="locale moyen">...</label>
+          <select id="lang"></select>
+        </div>
+        <div class="div-pref">
+          <label for="animation_speed" id="lab-animation-speed" class="locale moyen">...</label>
+          <select id="animation_speed"></select>
         </div>
       </div>
     </section>
+
+    <!-- PIED DE PAGE -->
     <section id="footer">
       <button type="button" id="btn-ok" class="locale default"></button>
     </section>

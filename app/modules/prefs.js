@@ -37,26 +37,17 @@ const MainPrefs = {
         , show: false
         , center: true
         , resizable: false
-        , closable: true // Mais ne ferme pas vraiment la fenêtre
+        , closable: false // il faut utiliser OK
       })
       var p = path.resolve(__dirname,'..','prefs.html')
       this.win.loadURL(`file://${p}`);
       this.observe()
       // DEBUG
       // this.win.toggleDevTools();
-      // TODO Charger les valeurs (app.getPath)
-      // TODO Régler les valeurs
       this.built = true
     }
   , observe: function(){
       var my = this
-
-      this.win.on('close', (event) => {
-        event.preventDefault() // Pour ne pas la détruire vraiment
-        // TODO Enregistrer les nouvelles valeurs ?
-        my.win.hide()
-      })
-
     }
 }
 

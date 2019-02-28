@@ -16,6 +16,8 @@ const Panels = {
 
       my.setDim()
       my.setLocales()
+      my.setMenus()
+      my.setValues()
 
       my.select(my.items[0]);
       console.log('<- Panels.init()')
@@ -34,15 +36,53 @@ const Panels = {
     }
     /**
      * Localise le panneau
+     *
+     * Pour localiser un élément HTML, il suffit :
+     *  - qu'il ait la class 'locale'
+     *  - qu'une locale portant le nom "ui-<id élément>" soit définie
      */
   , setLocales: function(){
-      // var l = ['ok']
-      // for(var suf of l){
-      //   $(`.ui-${suf}`).html(t(`ui-${suf}`))
-      // }
-      $('.locale').each(function(i, o){
-        o.innerHTML = t(`ui-${o.id}`)
-      })
+      $('.locale').each(function(i, o){o.innerHTML = t(`ui-${o.id}`)})
+    }
+    /**
+     * Définit les <select>
+     */
+  , themes: ['muscat', 'fantasy', 'serioso']
+  , languages: {'fr': 'Français', 'en': 'English'}
+  , setMenus: function(){
+      var options = []
+      for(var i=7;i<41;++i){ options.push(`<option value="${i}">${i}</option>`)}
+      $('.sizes-select').html(options.join(''))
+
+      options = []
+      for(var i=1;i<101;++i){ options.push(`<option value="${i}">${i}</option>`)}
+      $('#animation_speed').html(options.join(''))
+
+      options = []
+      for(var theme of this.themes)
+        {options.push(`<option value="${theme}">${theme}</option>`)}
+      $('#theme').html(options.join(''))
+
+      options = []
+      for(var lg in this.languages)
+        {options.push(`<option value="${lg}">${this.languages[lg]}</option>`)}
+      $('#lang').html(options.join(''))
+    }
+    /**
+     * Règle toutes les valeurs
+     */
+  , setValues: function(){
+      for(var pid in PREFS){
+        if (PREFS[pid] === false || PREFS[pid] === true){
+          // <= Boolean
+          // => Checkbox
+          document.getElementById(pid).checked = PREFS[pid]
+        } else {
+          // <= Not Boolean
+          // => value
+          $(`#${pid}`).val(PREFS[pid])
+        }
+      }
     }
   , select: function(panel){
       var my = this
