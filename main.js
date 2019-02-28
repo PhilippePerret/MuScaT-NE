@@ -21,12 +21,14 @@ const ipc = electron.ipcMain
 const IsMac     = process.platform === 'darwin'
 const IsNotMac  = !IsMac
 
-global.Analyser  = require('./app/modules/analyse.js')
-global.Locales   = require('./app/modules/Locales.js')
-const AppMenu   = require('./app/modules/menus.js')
+global.Analyser   = require('./app/modules/analyse.js')
+global.Locales    = require('./app/modules/Locales.js')
+global.MainPrefs  = require('./app/modules/prefs.js')
+const AppMenu     = require('./app/modules/menus.js')
 
 // La gestion des menus en a besoin
 global.win = null ;
+global.mainWindow = null ; // remplacer 'win' par ça
 global.mainMenuBar = null ; // défini au ready
 
 // Translation
@@ -57,13 +59,16 @@ app
   // Prend la taille de l'écran entier
   const { width, height } = electron.screen.getPrimaryDisplay().workAreaSize
   // win = new BrowserWindow({ width, height })
-  win = new BrowserWindow({
+  mainWindow = new BrowserWindow({
       webPreferences: {
         nodeIntegration: true // parce que j'utilise node.js dans les pages
       }
     , height: height, width: width
+    // Pour Linux Ubutu:
     , icon: path.resolve(__dirname,'assets','build','osx','logo-icon.png')
   });
+
+  win  = mainWindow
 
   // Pour l'atteindre depuis le module Analyser
   // Note : maintenant que `win` est global, ça ne doit plus être utile
@@ -76,6 +81,7 @@ app
   // Ajouter cette ligne pour voir les outils de développement
   // TODO Les mettre dans un menu
   // win.toggleDevTools();
+
 })
 .on('window-all-closed', (event)=>{
   if(IsNotMac){app.quit()}

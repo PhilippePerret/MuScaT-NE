@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 
 const {app} = require('electron');
 const path  = require('path')
@@ -184,6 +184,7 @@ const AppMenu = {
                 {
                     label: t('Reference-lines')
                   , type: 'checkbox'
+                  , id: 'references-lines'
                   , checked: false
                   , enabled: true
                   , click: () => {win.webContents.send('toggle-reference-lines')}
@@ -203,12 +204,20 @@ const AppMenu = {
           ]
         }
       ];
+      var dataMenuPreferences = {
+            role: 'preferences'
+          , label: t('Preferences')
+          , accelerator: 'CmdOrCtrl+,'
+          , click: () => {MainPrefs.open()}
+        }
       if (process.platform === 'darwin') {
         mTemp.unshift({
             label: app.getName()
+          , type: 'submenu'
           , submenu: [
               { role: 'about' }
             , { type: 'separator' }
+            , dataMenuPreferences
             , { role: 'services' }
             , { type: 'separator' }
             , { role: 'hide' }
@@ -218,6 +227,14 @@ const AppMenu = {
             , { role: 'quit' }
           ]
         })
+      } else if(process.platform === 'win'){
+        // Pour window
+        mTemp[2].submenu.push({type:'separator'})
+        mTemp[2].submenu.push(dataMenuPreferences)
+      } else {
+        // Pour linux
+        mTemp[1].submenu.push({type:'separator'})
+        mTemp[1].submenu.push(dataMenuPreferences)
       }
 
       // Avant de construire le Menu, on mémorise les positions des menus

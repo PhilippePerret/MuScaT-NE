@@ -1,0 +1,68 @@
+/* Pour régler les dimensions */
+body {
+  font: caption;
+  font-size: 16px;
+}
+/* Communs */
+section#onglets-panels,
+section#panels {
+  position: fixed;
+  top: 0;
+  font-size: inherit;
+}
+
+body {
+  margin:0;
+  padding:0;
+  background-color:#000000;
+  font: caption;
+}
+/* ONGLETS À GAUCHE */
+section#onglets-panels {
+  background-color: #EEEEEE;
+}
+section#onglets-panels ul {
+  list-style: none;
+  font: caption;
+  font-size: inherit;
+  padding: 1.2em 0;
+  margin: 0;
+}
+section#onglets-panels ul li {
+  padding: 0.32em 1em;
+  font-size: 1.2em;
+}
+section#onglets-panels ul li:hover {
+  background-color: #4286f4; /* bleu-mac */
+  color: white;
+}
+section#onglets-panels ul li.selected {
+  background-color: #4fbcf7;
+  color: black;
+  font-weight: bold;
+}
+
+/* PANNEAUX À DROITE */
+section#panels {
+  background-color: #DDDDDD;
+}
+section#panels .panel {
+  display: none;
+  padding: 2em;
+}
+section#panels .panel.visible {
+  display: block;
+}
+section#panels .panel div.div-pref {
+  padding: 0.5em 1em;
+  font: inherit;
+}
+
+section#footer {
+  position: fixed;
+  bottom: 0;
+  font:caption;
+  text-align: right;
+  padding: 10px 15px;
+  background-color: #CCCCCC;
+}

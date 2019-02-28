@@ -1,15 +1,18 @@
 {
-  "premiere":"virgule"
+  "DÉBUT":"FICHIER"
 
+, "=== MENU ANALYSE ===": ""
 , "new-analysis": "Nouvelle analyse…"
 , "open-analysis": "Ouvrir l'analyse…"
 , "save-analysis": "Sauver l'analyse"
 , "export-pdf":     "Exporter vers PDF"
 , "open-pdf":       "Ouvrir le fichier PDF"
 
+, "=== MENU ÉDITION ===": ""
 , "Edit": "Édition"
 , "Paste": "Coller"
 
+, "=== MENU TAG ===": ""
 , "Tag": "Tag"
 , "new-tag": "Nouveau Tag"
 , "del-tag": "Détruire le Tag"
@@ -21,12 +24,21 @@
 , "align-tag-left": "Aligner à gauche"
 , "align-tag-right": "Aligner à droite"
 
+, "=== MENU HELP ===": ""
 , "Help": "Aide"
 , "Manual": "Manuel"
 
+, "=== MENU OPTIONS ===": ""
 , "Options": "Options"
 , "Reference-lines": "Lignes d'alignement"
 
+, "=== FENÊTRE DES PRÉFÉRENCES ===": ""
+, "Preferences": "Préférences"
+, "ui-btn-ok": "OK"
+, "show-visor": "Afficher le viseur"
+
+
+, "=== DIVERS ===": ""
 , "clipboard": "presse-papier"
 , "Open": "Ouvrir"
 , "source-code": "code source"

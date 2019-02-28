@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title><script>document.write('Préférences')</script></title>
+    <link rel="stylesheet" href="./css/prefs.css" media="screen" />
+    <link rel="stylesheet" href="./css/common.css" media="screen" />
+  </head>
+  <body>
+
+    <!-- Pour simuler le bouton OK par défaut -->
+    <form id="form-default-return">
+      <button type="submit" tabindex="-1" name="default-ok-button" class="invisible"></button>
+    </form>
+
+    <section id="onglets-panels">
+      <ul>
+        <li id="o-panel-general">Général</li>
+        <li id="o-panel-aspect">Aspect</li>
+        <li id="o-panel-outils">Outils</li>
+      </ul>
+    </section>
+    <section id="panels">
+
+      <!-- PANNEAU GÉNÉRAL -->
+      <div id="panel-general" class="panel">
+        <div class="div-pref">
+          <label>Dossier des analyses (par défaut)</label>
+          <input type="text" id="analysis_folder" name="analysis_folder" value="" />
+          <button type="button">Choisir…</button>
+        </div>
+      </div>
+
+      <!-- PANNEAU DE L'ASPECT -->
+      <div id="panel-aspect" class="panel">
+        <div class="div-pref">
+          <label for="theme">Thème </label>
+          <select class="" name="theme" id="theme">
+            <!-- Sera rempli automatiquement -->
+          </select>
+        </div>
+        <div class="div-pref">
+          <label for="modulation_fsize">Taille des modulations</label>
+          <input type="text" id="modulation_fsize" name="modulation_fsize" value="" /> (px)
+        </div>
+      </div>
+
+      <!-- PANNEAU DES OUTILS -->
+      <div id="panel-outils" class="panel">
+        <div class="div-pref">
+          <input type="checkbox" name="references_lines" id="references_lines" value="">
+          <label for="references_lines">Afficher les lignes de références</label>
+        </div>
+        <div class="div-pref">
+          <input type="checkbox" name="visor" id="visor" value="">
+          <label for="visor" class="locale" id="show-visor"></label>
+        </div>
+      </div>
+    </section>
+    <section id="footer">
+      <button type="button" id="btn-ok" class="locale default"></button>
+    </section>
+
+    <script>window.$ = window.jQuery = require('./js/system/jquery-min.js');</script>
+    <!-- Dossier système -->
+    <script src="./js/system/jquery-min.js"></script>
+    <script src="./js/system/jquery-ui-min.js"></script>
+    <script src="./js/system/ipc.js"></script>
+    <script src="./js/system/Panels.js"></script>
+    <script src="./js/app/prefs.js"></script>
+    <script src="./js/app/Locales.js"></script>
+    <script src="./js/app/preferences/ipc.js"></script>
+
+  </body>
+</html>

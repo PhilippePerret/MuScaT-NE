@@ -27,6 +27,11 @@
 , "Options": "Options"
 , "Reference-lines": "References lines"
 
+, "=== PREFERENCES WINDOW ===": ""
+, "Preferences": "Preferences"
+, "ui-btn-ok": "OK"
+, "show-visor": "Show the visor"
+
 , "clipboard": "clipboard"
 , "Open": "Open"
 , "source-code": "Source code"
