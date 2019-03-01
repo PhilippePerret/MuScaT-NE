@@ -73,6 +73,11 @@ const AppMenu = {
                   }
                 }
               }
+            , {
+                  label: t('show-folder')
+                , accelerator: 'CmdOrCtrl+Shift+N'
+                , click: () => {Analyser.openFolder()}
+              }
             , { type: 'separator' }
             , {
                   label: t('save-analysis')

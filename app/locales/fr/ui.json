@@ -2,9 +2,10 @@
   "DÉBUT":"FICHIER"
 
 , "=== MENU ANALYSE ===": ""
-, "new-analysis": "Nouvelle analyse…"
-, "open-analysis": "Ouvrir l'analyse…"
-, "save-analysis": "Sauver l'analyse"
+, "new-analysis":   "Nouvelle analyse…"
+, "open-analysis":  "Ouvrir l'analyse…"
+, "show-folder":    "Ouvrir le dossier de l'analyse"
+, "save-analysis":  "Sauver l'analyse"
 , "export-pdf":     "Exporter vers PDF"
 , "open-pdf":       "Ouvrir le fichier PDF"
 

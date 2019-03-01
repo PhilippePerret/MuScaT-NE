@@ -1,12 +1,6 @@
 'use strict';
 
 /**
- * Stratégie à employer pour passer de l'application Chrome à l'app Electron
- *
- *  - mettre un évènement sur le redimensionnement de la fenêtre
- *  - pouvoir visualiser la partition seule, en plus gros
- *  - Tous les scripts doivent devenir des menus
- *
  *  TODO : voir mousetrap qui a l'air très puissant pour les raccourcis
  *  https://electronjs.org/docs/tutorial/keyboard-shortcuts#raccourcis-dans-un-browserwindow
  */
@@ -32,9 +26,10 @@ global.MainPrefs  = require('./app/modules/main-prefs.js')
 const AppMenu     = require('./app/modules/menus.js')
 
 // La gestion des menus en a besoin
-global.win = null ;
-global.mainWindow = null ; // remplacer 'win' par ça
-global.mainMenuBar = null ; // défini au ready
+global.bWindow = null       // Fenêtre background
+global.win = null
+global.mainWindow = null // remplacer 'win' par ça
+global.mainMenuBar = null // défini au ready
 
 // Translation
 global.t = (msg_id, msg_replacements) => {
@@ -51,6 +46,18 @@ var winPrefs
 // var mainMenuBar = new Menu();
 
 app.on('ready', () => {
+
+
+  bWindow = new BrowserWindow({
+      title: 'Background'
+    , x: 0
+    , y: 0
+    , width: 400
+    , height: 1000
+    , show: true // quand on veut déboggeur (tous les messages sont envoyés)
+  })
+  bWindow.loadURL(`file://${__dirname}/app/background.html`)
+  bWindow.toggleDevTools();
 
   // On charge la configuration (pour le moment, notamment pour :
   // - la dernière analyse (qui se charge automatiquement))
@@ -74,7 +81,9 @@ app.on('ready', () => {
       webPreferences: {
         nodeIntegration: true // parce que j'utilise node.js dans les pages
       }
-    , height: height, width: width
+    , height: height
+    , width: width - 400
+    , x: 400
     // Pour Linux Ubutu:
     , icon: path.resolve(__dirname,'assets','build','osx','logo-icon.png')
   });
@@ -110,6 +119,7 @@ app.on('ready', () => {
   })
 
 })// Fin de app ready
+
 app.on('window-all-closed', (event)=>{
   if(IsNotMac){app.quit()}
 })
@@ -136,6 +146,8 @@ ipc.on('set-menus-multiselections', (err, yes) => {
   })
 ipc.on('log', (ev, data) => {
     console.log(data.message)
+    if('string' == typeof(data)){data = {message: data}}
+    bWindow.webContents.send('debug', data)
   })
 ipc.on('quit-preferences', (ev) => {
   console.log("Je quitte les préférences depuis le main process")

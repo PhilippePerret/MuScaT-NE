@@ -1,6 +1,6 @@
 'use strict';
 
-const { dialog } = require('electron')
+const { dialog, shell } = require('electron')
 const fs    = require('fs'); // file system
 const ipc   = require('electron').ipcMain
 const path  = require('path')
@@ -110,6 +110,12 @@ const Analyser = {
           return false;
         }
       }
+    }
+    /**
+     * Méthode appelée par le menu pour ouvrir le dossier dans le bureau
+     */
+  , openFolder: function() {
+      shell.openItem(this.current.folder)
     }
   , askForAnalysisFolder: function(win, msg) {
       var msg = msg || 'Dossier de l’analyse :' ;

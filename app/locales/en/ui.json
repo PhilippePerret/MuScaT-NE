@@ -1,8 +1,10 @@
 {
   "premiere":"virgule"
 
+, "=== ANALYSIS MENU ===": ""
 , "new-analysis": "New analysis…"
 , "open-analysis": "Open analysis…"
+, "show-folder":    "Open analysis folder"
 , "save-analysis": "Save analysis"
 , "export-pdf":     "Export to PDF"
 , "open-pdf":       "Open PDF file"
