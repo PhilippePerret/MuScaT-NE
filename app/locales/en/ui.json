@@ -50,6 +50,7 @@
 , "ui-o-panel-options": "Options"
 , "ui-lab-lang": "Lang"
 , "ui-lab-animation-speed": "Animation speed"
+, "ui-start-from-last": "Always reload last analysis"
 
 , "clipboard": "clipboard"
 , "Open": "Open"

@@ -1,11 +1,15 @@
 'use strict'
+/**
+ * Module chargé par la fenêtre des préférences
+ */
 
 // const electron = require('electron');
 // const fs = require('fs');
 // const { app } = require('electron');
 // const path = require('path')
 
-const MainPrefs = require('./modules/prefs')
+// Note : ne s'en servir QUE pour les dimensions
+const MainPrefs = require('./modules/main-prefs')
 
 const PREFS = null || {
     property: 'value'
@@ -40,13 +44,19 @@ const Prefs = {
       }
     }
   , init: function(){
+      log('-> Prefs#init')
+      var my = this
       $('form#form-default-return').on('submit', Prefs.quit.bind(Prefs))
-      $('#btn-ok').on('click', ()=>{
-        // TODO Envoyer un évènement de fermeture par IPC
-      })
+      document.getElementById('btn-ok').addEventListener('click', my.quit)
+      log('<- Prefs#init')
     }
+    /**
+     * Noter qu'on ne peut pas fermer la fenêtre (MainPrefs.win) depuis cette
+     * méthode, car elle appartient au renderer alors que c'est le main process
+     * qui a ouvert la fenêtre
+     */
   , quit: function(){
-      console.log("Je vais quitter les préférences.")
+      ipc.send('quit-preferences')
     }
 
     /**

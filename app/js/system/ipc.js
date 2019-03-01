@@ -1,7 +1,7 @@
 'use strict'
 /**
  * Ce module est le module de "contact" entre le main process et le processus
- * de rendu.
+ * de rendu. Il doit être chargé par toutes les fenêtre BrowserWindow
  */
 const electron = require('electron');
 const ipc = electron.ipcRenderer ;
@@ -18,3 +18,7 @@ const ANALYSE = 'Essai'
 ipc.on('error', (event, data) => {
   F.error(data.message)
 });
+
+const log = function(message){
+  ipc.send('log', {message: message})
+}

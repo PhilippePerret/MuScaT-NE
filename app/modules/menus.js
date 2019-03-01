@@ -208,7 +208,7 @@ const AppMenu = {
             role: 'preferences'
           , label: t('Preferences')
           , accelerator: 'CmdOrCtrl+,'
-          , click: () => {MainPrefs.open()}
+          , click: () => {MainPrefs.show()}
         }
       if (process.platform === 'darwin') {
         mTemp.unshift({

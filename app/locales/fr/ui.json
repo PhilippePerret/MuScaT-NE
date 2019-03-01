@@ -56,6 +56,7 @@
 , "ui-o-panel-options": "Options"
 , "ui-lab-lang": "Langue"
 , "ui-lab-animation-speed": "Vitesse de l'animation"
+, "ui-start-from-last": "Toujours recharger la dernière analyse"
 
 , "=== DIVERS ===": ""
 , "clipboard": "presse-papier"

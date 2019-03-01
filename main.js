@@ -21,9 +21,14 @@ const ipc = electron.ipcMain
 const IsMac     = process.platform === 'darwin'
 const IsNotMac  = !IsMac
 
+/**
+ * Les préférences utilisateur
+ */
+const userPrefsPath = path.join(app.getPath('userData'), 'user-preferences.json')
+
 global.Analyser   = require('./app/modules/analyse.js')
 global.Locales    = require('./app/modules/Locales.js')
-global.MainPrefs  = require('./app/modules/prefs.js')
+global.MainPrefs  = require('./app/modules/main-prefs.js')
 const AppMenu     = require('./app/modules/menus.js')
 
 // La gestion des menus en a besoin
@@ -35,11 +40,17 @@ global.mainMenuBar = null ; // défini au ready
 global.t = (msg_id, msg_replacements) => {
   return Locales.translate(msg_id, msg_replacements)
 }
+// Pour utiliser indifféremment 'log' dans le main process et dans les
+// renderers.
+global.log = (message) => {
+  console.log(message)
+}
+
+var winPrefs
 
 // var mainMenuBar = new Menu();
 
-app
-.on('ready', () => {
+app.on('ready', () => {
 
   // On charge la configuration (pour le moment, notamment pour :
   // - la dernière analyse (qui se charge automatiquement))
@@ -82,19 +93,32 @@ app
   // TODO Les mettre dans un menu
   // win.toggleDevTools();
 
-})
-.on('window-all-closed', (event)=>{
+  winPrefs = MainPrefs.build()
+  winPrefs.on('move', (ev) => {
+    console.log("Ça bouge dans main process")
+  })
+  winPrefs.on('beforeunload', (ev) => {
+    console.log("On quitte les préférences (beforeunload)")
+  })
+  winPrefs.on('quit', (ev) => {
+    console.log("On quitte les préférences")
+  })
+  winPrefs.on('close', (ev) => {
+    MainPrefs.win = null
+    MainPrefs.built = false
+    console.log("On close les préférences")
+  })
+
+})// Fin de app ready
+app.on('window-all-closed', (event)=>{
   if(IsNotMac){app.quit()}
 })
-.on('quit', (event) => {
-  if (MainPrefs.win){
-    // <= La fenêtre des préférences a été ouverte
-    // => Il faut la détruire
-    console.log("Fermeture de la fenêtre des préférences au quit")
-    MainPrefs.win.close()
-  }
+app.on('quit', (event) => {
+  console.log('-> quit')
+  console.log('<- quit')
 })
 ;
+
 
 // Pour sauver l'analyse courante
 const AnalyserB = Analyser.save.bind(Analyser)
@@ -104,10 +128,17 @@ ipc.on('save-tags', (err, data) => {
 
 // Pour obtenir (de façon synchrone) une valeur de locale
 // Car elles sont gérées au niveau du main process
-ipc
-  .on('get-locale', (event, data) => {
+ipc.on('get-locale', (event, data) => {
     event.returnValue = t(data.id, data.replacements);
   })
-  .on('set-menus-multiselections', (err, yes) => {
+ipc.on('set-menus-multiselections', (err, yes) => {
     AppMenu.setMenusSelectionMultiple(yes)
   })
+ipc.on('log', (ev, data) => {
+    console.log(data.message)
+  })
+ipc.on('quit-preferences', (ev) => {
+  console.log("Je quitte les préférences depuis le main process")
+  MainPrefs.quit()
+  // app.quit()
+})
