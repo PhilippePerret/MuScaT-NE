@@ -7,6 +7,12 @@
 * Créer sa définition complète dans `DATA_PREFS` dans le fichier `app/common/data_prefs.js`,
 * Si nécessaire (traitement particulier), faire le traitement dans `app/table_analyse/prefs.js` (mais normalement, il vaut mieux faire une fonction qui sera définie aussi dans la propriété `fct` de la préférence dans `DATA_PREFS`)
 
+### Trois niveaux de préférences
+
+    1. Préférences de l'analyse (fichier `prefs.json`)
+    2. Préférences de l'utilisateur (dans `Application Support/user-preferences.json`)
+    3. Préférences par défaut
+
 ## Classe panneau
 
 Une classe `Panel` pour gérer les panneaux (elle doit pouvoir être utilisée par n'importe quelle application)

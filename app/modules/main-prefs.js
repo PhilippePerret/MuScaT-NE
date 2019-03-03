@@ -92,6 +92,7 @@ const MainPrefs = {
       this.win.once('ready-to-show', (event) => {my.isReady = true})
       return this.win
     }
+  , getAnalysisPrefs: function(){return analysisPrefs}
   , getUserPrefs: function(){return PREFS}
   , getDefaultPrefs: function(){return DATA_PREFS}
     /**

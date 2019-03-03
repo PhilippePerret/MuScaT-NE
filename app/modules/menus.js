@@ -69,8 +69,6 @@ const AppMenu = {
                       , path: fpath
                       , analyse_name: path.basename(fpath)
                     })
-                    // On active les menus
-                    // var m = mainMenuBar.items[1].submenu.items[3]; //getMenuItemById('menu-save-analysis')
                     AppMenu.enableMenus(my.CUR_ANALYSE_MENUS)
                   }
                 }
@@ -88,7 +86,9 @@ const AppMenu = {
                 , accelerator: 'CmdOrCtrl+S'
                 , click: () => {
                     win.webContents.send('get-tags-code');
-                  }
+                    // En cas de nouvelle :
+                    AppMenu.enableMenus(my.CUR_ANALYSE_MENUS)
+                }
                 , enabled: false
                 , id: 'save-analysis-menu-item'
               }

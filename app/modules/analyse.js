@@ -16,13 +16,25 @@ class Analyse {
   }
   set folder(v)   { this._folder = v }
   get folder()    { return this._folder }
+  get imagesFolder(){
+    return this._imagesFolder || this.defPath('_imagesFolder', 'images')
+  }
   set window(v)   { this._window = v }
   get window()    { return this._window }
   get name()      { return path.basename(this.folder) }
-  get tags_path() { return `${this.folder}/_tags_.js` }
-  get pdf_path()  { return `${this.folder}/${this.name}.pdf` }
-  // --- Méthodes ---
+  get tags_path() {
+    return this._tags_path || this.defPath('_tags_path', '_tags_.js')
+  }
+  get pdf_path()  {
+    return this._pdf_path || this.defPath('_pdf_path', `${this.name}.pdf`)
+  }
 
+  // --- Méthodes ---
+  def(pid, value) {this[pid] = value; return value}
+  defPath(pid, relPath){
+    this[pid] = path.join(this.folder, relPath)
+    return this[pid]
+  }
   /**
    * Retourne TRUE si le dossier est valide, c'est-à-dire s'il contient
    * bien le fichier _tags_.js
@@ -72,6 +84,14 @@ class Analyse {
   openPDF(){
 
   }
+
+  /**
+   * Créer le dossier images, mais seulement s'il n'existe pas
+   */
+   buildImagesFolder(){
+     if(fs.existsSync(this.imagesFolder)){return}
+     fs.mkdirSync(this.imagesFolder)
+   }
 }
 
 
@@ -144,9 +164,9 @@ const Analyser = {
         // demander son dossier)
         console.log("Demande de path pour la nouvelle analyse")
         let folder = my.askForAnalysisFolder(win)
-        console.log("folder:", folder)
         if (!folder){return false}
         my.current = new Analyse({folder: folder, window: win});
+        my.current.buildImagesFolder()
       }
       my.current.save(data.code);
     }
@@ -158,6 +178,7 @@ const Analyser = {
       var my = Analyser
       my.current = null;
       win.webContents.send('init-new-analysis')
+      global.analysisPrefs = {}
     }
     /**
      * Pour exporter l'analyse courante vers PDF

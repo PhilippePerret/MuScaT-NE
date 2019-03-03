@@ -22,6 +22,7 @@ global.Locales    = require('./app/modules/Locales.js')
 * Les préférences utilisateur
 */
 global.userPrefsPath = path.join(app.getPath('userData'), 'user-preferences.json')
+global.analysisPrefs = {}
 global.MainPrefs  = require('./app/modules/main-prefs.js')
 // let Pref = require('./app/common/Pref.js')
 
