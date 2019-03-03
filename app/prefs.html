@@ -14,8 +14,13 @@
 
     <section id="onglets-panels">
       <ul>
+        <!--
+          Le nom "o-<nom>" doit renvoyer div.<nom>
+          p.e.: "o-panel-general" => div.panel-general
+        -->
         <li id="o-panel-general" class="locale">...</li>
         <li id="o-panel-aspect" class="locale">...</li>
+        <li id="o-panel-interface" class="locale">...</li>
         <li id="o-panel-outils" class="locale">...</li>
         <li id="o-panel-options" class="locale">...</li>
       </ul>
@@ -35,41 +40,54 @@
       <div id="panel-aspect" class="panel">
         <div class="div-pref">
           <label id="label-theme" for="theme" class="moyen locale">...</label>
-          <select id="theme"></select>
+          <select id="theme" class="changeable"></select>
         </div>
         <div class="div-pref">
           <div>
             <label id="label-acc-fsize" class="long locale" for="chord_fsize">...</label>
-            <select class="sizes-select" id="chord_fsize"></select> (px)
+            <select class="sizes-select changeable" id="chord_fsize"></select> (px)
           </div>
           <div>
             <label id="label-har-fsize" class="long locale" for="harmony_fsize">...</label>
-            <select class="sizes-select" id="harmony_fsize"></select> (px)
+            <select class="sizes-select changeable" id="harmony_fsize"></select> (px)
           </div>
           <div>
             <label id="label-cad-fsize" class="long locale" for="cadence_fsize">...</label>
-            <select class="sizes-select" id="cadence_fsize"></select> (px)
+            <select class="sizes-select changeable" id="cadence_fsize"></select> (px)
           </div>
           <div>
             <label id="label-mod-fsize" class="long locale" for="modulation_fsize">...</label>
-            <select class="sizes-select" id="modulation_fsize"></select> (px)
+            <select class="sizes-select changeable" id="modulation_fsize"></select> (px)
           </div>
           <div>
             <label id="label-par-fsize" class="long locale" for="part_fsize">...</label>
-            <select class="sizes-select" id="part_fsize"></select> (px)
+            <select class="sizes-select changeable" id="part_fsize"></select> (px)
           </div>
           <div>
             <label id="label-mes-fsize" class="long locale" for="measure_fsize">...</label>
-            <select class="sizes-select" id="measure_fsize"></select> (px)
+            <select class="sizes-select changeable" id="measure_fsize"></select> (px)
           </div>
           <div>
             <label id="label-deg-fsize" class="long locale" for="degree_fsize">...</label>
-            <select class="sizes-select" id="degree_fsize"></select> (px)
+            <select class="sizes-select changeable" id="degree_fsize"></select> (px)
           </div>
           <div>
             <label id="label-tex-fsize" class="long locale" for="text_fsize">...</label>
-            <select class="sizes-select" id="text_fsize"></select> (px)
+            <select class="sizes-select changeable" id="text_fsize"></select> (px)
           </div>
+        </div>
+        <div class="div-pref">
+          <button type="button" id="btn-save-for-curanalysis" class="locale">...</button>
+        </div>
+
+      </div>
+      <!-- /Panneau aspect -->
+
+      <!-- PANNEAU INTERFACE -->
+      <div id="panel-interface" class="panel">
+        <div class="def-pref">
+          <label id="label-ui-code-fsize" class="long locale" for="ui_code_fsize">...</label>
+          <select class="sizes-select changeable" id="ui_code_fsize"></select> (px)
         </div>
       </div>
 
@@ -100,6 +118,9 @@
           <label for="start_from_last_analysis" class="locale long" id="start-from-last"></label>
         </div>
       </div>
+      <!-- /Panneau options -->
+
+
     </section>
 
     <!-- PIED DE PAGE -->
@@ -112,9 +133,9 @@
     <script src="./js/system/jquery-ui-min.js"></script>
     <script src="./js/system/ipc.js"></script>
     <script src="./js/system/Panels.js"></script>
-    <script src="./js/app/prefs.js"></script>
     <script src="./js/app/Locales.js"></script>
     <script src="./js/app/preferences/ipc.js"></script>
+    <script src="./js/app/preferences/prefs.js"></script>
 
   </body>
 </html>

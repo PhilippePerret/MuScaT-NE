@@ -1,5 +1,6 @@
 'use strict'
 
+
 /**
  * Méthode appelée par le main process lorsque l'utilisateur a choisi un
  * fichier Tags (i.e. un fichier d'analyse).

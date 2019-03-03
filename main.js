@@ -15,14 +15,17 @@ const ipc = electron.ipcMain
 const IsMac     = process.platform === 'darwin'
 const IsNotMac  = !IsMac
 
-/**
- * Les préférences utilisateur
- */
-const userPrefsPath = path.join(app.getPath('userData'), 'user-preferences.json')
 
 global.Analyser   = require('./app/modules/analyse.js')
 global.Locales    = require('./app/modules/Locales.js')
+/**
+* Les préférences utilisateur
+*/
+global.userPrefsPath = path.join(app.getPath('userData'), 'user-preferences.json')
 global.MainPrefs  = require('./app/modules/main-prefs.js')
+// let Pref = require('./app/common/Pref.js')
+
+// Les menus
 const AppMenu     = require('./app/modules/menus.js')
 
 // La gestion des menus en a besoin
@@ -92,7 +95,7 @@ app.on('ready', () => {
 
   // Pour l'atteindre depuis le module Analyser
   // Note : maintenant que `win` est global, ça ne doit plus être utile
-  Analyser.win = win;
+  Analyser.win = mainWindow;
 
   // On charge dans la fenêtre créée le fichier principal, c'est-à-dire la
   // table d'analyse.
@@ -116,6 +119,9 @@ app.on('ready', () => {
     MainPrefs.win = null
     MainPrefs.built = false
     console.log("On close les préférences")
+  })
+  winPrefs.on('closed', ()=>{
+    winPrefs = null
   })
 
 })// Fin de app ready
@@ -149,8 +155,36 @@ ipc.on('log', (ev, data) => {
     if('string' == typeof(data)){data = {message: data}}
     bWindow.webContents.send('debug', data)
   })
+
+// Pour essayer de récupérer la fenêtre de la table d'analyse
+ipc.on('get-main-window', (ev) => {
+  ev.returnValue = mainWindow
+})
+/**
+ * === PRÉFÉRENCES ===
+ */
+ipc.on('get-user-prefs', (ev) => {
+  ev.returnValue = MainPrefs.getUserPrefs()
+})
+ipc.on('get-default-prefs', (ev) => {
+  ev.returnValue = MainPrefs.getDefaultPrefs()
+})
+ipc.on('get-pref', (ev, data) => {
+  ev.returnValue = MainPrefs.get(data.id)
+})
+ipc.on('set-pref', (ev, data) => {
+  ev.returnValue = MainPrefs.set(data)
+})
+ipc.on('set-pref-prov', (ev, data) => {
+  log("[MAIN] -> set-pref-prov")
+  if(MainPrefs.isRepercutable(data.pid)){
+    log("[MAIN] isRepercutable = true")
+    mainWindow.webContents.send('set-pref-prov', data)
+  }
+})
 ipc.on('quit-preferences', (ev) => {
   console.log("Je quitte les préférences depuis le main process")
+  MainPrefs.saveIfModified()
   MainPrefs.quit()
   // app.quit()
 })

@@ -32,14 +32,16 @@ const AppMenu = {
     }
 
   , MULTISEL_MENUS: ['align-tag-top','align-tag-bottom','align-tag-left','align-tag-right', 'ajust-tags','group-tags']
+  , CUR_ANALYSE_MENUS: ['save-analysis-menu-item', 'export-pdf','open-pdf-file', 'open-folder']
+  , NEW_ANALYSE_MENUS: ['save-analysis-menu-item']
   , setMenusSelectionMultiple: function(on){
       var my = this
       my[on?'enableMenus':'disableMenus'](my.MULTISEL_MENUS)
     }
 
     // Construit le menu et le retourne
-  , menuTemplate: () => {
-      var my = AppMenu ;
+  , menuTemplate: function() {
+      var my = this ;
       my.getMenuData = {}
       var mTemp = [
         {
@@ -50,8 +52,8 @@ const AppMenu = {
                   label: t('new-analysis')
                 , accelerator: 'CmdOrCtrl+N'
                 , click: () => {
-                  AppMenu.disableMenus(['export-pdf','open-pdf-file'])
-                  AppMenu.enableMenus(['save-analysis-menu-item'])
+                  AppMenu.disableMenus(my.CUR_ANALYSE_MENUS)
+                  AppMenu.enableMenus(my.NEW_ANALYSE_MENUS)
                   Analyser.initNew(win)
                 }
               }
@@ -62,20 +64,22 @@ const AppMenu = {
                   let fpath = Analyser.open(win);
                   if (fpath){
                     // console.log('Dossier choisi : ', fpath);
-                    win.webContents.send('tags-loaded', {
+                    mainWindow.webContents.send('tags-loaded', {
                         properties: 'of the analysis FOLDER'
                       , path: fpath
                       , analyse_name: path.basename(fpath)
                     })
                     // On active les menus
                     // var m = mainMenuBar.items[1].submenu.items[3]; //getMenuItemById('menu-save-analysis')
-                    AppMenu.enableMenus(['save-analysis-menu-item','export-pdf','open-pdf-file'])
+                    AppMenu.enableMenus(my.CUR_ANALYSE_MENUS)
                   }
                 }
               }
             , {
                   label: t('show-folder')
+                , id: 'open-folder'
                 , accelerator: 'CmdOrCtrl+Shift+N'
+                , enabled: false
                 , click: () => {Analyser.openFolder()}
               }
             , { type: 'separator' }

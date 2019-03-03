@@ -54,8 +54,14 @@ function Tag(data_line) {
   // sont enregistrées au fur et à mesure du déplacement)
   this.modified = false ;
 
+  // Pour savoir si le tag, après décomposition, est valide.
+  // (cf. méthode suivante)
+  this.isValid = true ;
+
   // On décompose complètement la ligne pour en tirer les informations
   // utiles, comme ses coordonnées ou son texte.
+  // C'est cette méthode qui va mettre la valeur de isValid à true si
+  // le tag est bien défini
   this.decompose();
 
   /*
@@ -1068,6 +1074,7 @@ Object.defineProperties(Tag.prototype,{
         this._data_nature = NATURES[this.nature_init] ;
         if(!this._data_nature){
           error(t('unknown-nature', {nature: this.nature_init}));
+          this.isValid = false;
           return null ;
         } else if (this._data_nature.aka){
           this._data_nature = NATURES[this._data_nature.aka];
@@ -1082,6 +1089,7 @@ Object.defineProperties(Tag.prototype,{
           if(this.is_comment_line || this.is_empty_line){return null};
           if(!NATURES[this.nature_init]){
             error(t('unknown-nature', {nature: this.nature_init}));
+            this.isValid = false;
             return null ;
           }
           this._nature = NATURES[this.nature_init].aka || this.nature_init ;

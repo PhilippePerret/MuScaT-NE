@@ -26,13 +26,16 @@ const Panels = {
       var my = this
       // On définit les dimensions des éléments
       // Noter la virgule, ci-dessous, qui est normale
-      $('#panels, .panel, #onglets-panels').css('height', `${MainPrefs.WIN_HEIGHT - 41}px`)
-      $('#onglets-panels').css({'width': `${MainPrefs.ONGLETS_WIDTH}px`})
+      var winHeight = getPref('prefs_window_height')
+      var winWidth  = getPref('prefs_window_width')
+      var ongWidth  = getPref('prefs_onglets_width')
+      $('#panels, .panel, #onglets-panels').css('height', `${winHeight - 41}px`)
+      $('#onglets-panels').css({'width': `${ongWidth}px`})
       $('#panels').css({
-          'width': `${MainPrefs.WIN_WIDTH - MainPrefs.ONGLETS_WIDTH}px`
-        , 'left':  `${1 + MainPrefs.ONGLETS_WIDTH}px`
+          'width': `${winWidth - ongWidth}px`
+        , 'left':  `${1 + ongWidth}px`
       })
-      $('#footer').css('width', `${MainPrefs.WIN_WIDTH - 30}px`)
+      $('#footer').css('width', `${winWidth - 30}px`)
     }
     /**
      * Localise le panneau
@@ -72,15 +75,16 @@ const Panels = {
      * Règle toutes les valeurs
      */
   , setValues: function(){
-      for(var pid in PREFS){
-        if (PREFS[pid] === false || PREFS[pid] === true){
+      for(var pid in Prefs.DefaultPrefs){
+        var val = Prefs.UserPrefs[pid] || Prefs.DefaultPrefs[pid].defValue
+        if (val === false || val === true){
           // <= Boolean
           // => Checkbox
-          document.getElementById(pid).checked = PREFS[pid]
+          document.getElementById(pid).checked = val
         } else {
           // <= Not Boolean
           // => value
-          $(`#${pid}`).val(PREFS[pid])
+          $(`#${pid}`).val(val)
         }
       }
     }
