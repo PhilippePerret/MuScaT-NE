@@ -35,6 +35,8 @@
 
 , "=== FENÊTRE DES PRÉFÉRENCES ===": ""
 , "Preferences": "Préférences"
+, "--- General pannel ---": ""
+, "ui-open-last-at-launch": "Toujours ré-ouvrir la dernière analyse"
 , "ui-btn-ok": "OK"
 , "ui-show-visor": "Afficher le viseur"
 , "ui-o-panel-general": "Général"

@@ -145,11 +145,18 @@ $(document).ready(function(){
   })
   $('.changeable').on('blur', function(){
     var o = $(this)[0]
-    if (getPref(o.id) != o.value){
-      setPref(o.id, o.value)
-      log(`La préférence ${o.id} a été mise à ${o.value} (au blur)`)
+    var v = null
+    if(o.type == 'checkbox'){
+      v = o.checked
+      log(`Un checkbox avec la valeur checked:${v}`)
     } else {
-      log(`La préférence ${o.id} n'a pas été modifiée. Je ne l'enregistre pas.`)
+      v = o.value
+    }
+    if (getPref(o.id) != v){
+      setPref(o.id, v)
+      log(`La préférence ${o.id} a été mise à ${v} (au blur)`)
+    } else {
+      log(`La préférence ${o.id} n'a pas été modifiée (valeur: ${v}). Je ne l'enregistre pas.`)
     }
   })
 
