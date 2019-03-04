@@ -63,7 +63,6 @@ const AppMenu = {
                 , click: () => {
                   let fpath = Analyser.open(win);
                   if (fpath){
-                    // console.log('Dossier choisi : ', fpath);
                     mainWindow.webContents.send('tags-loaded', {
                         properties: 'of the analysis FOLDER'
                       , path: fpath

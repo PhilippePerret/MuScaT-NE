@@ -1,5 +1,18 @@
 'use strict'
 
+const remote = electron.remote
+const fs = require('fs')
+const path = require('path')
+
+/**
+ * Pour envoyer une notification depuis le main process ou autre
+ * +data+
+ *    :message      The message to notify
+ *    [OPT] :duration     Displayed time (in seconds)
+ */
+ipc.on('notify', (ev, data) => {
+  F.notify(data.message, data)
+})
 
 /**
  * Méthode appelée par le main process lorsque l'utilisateur a choisi un
@@ -14,12 +27,17 @@
 ipc.on('tags-loaded', (err, data) => {
   let fpath = data.path ;
   if (fpath){
-    MuScaT.analyse_file_path    = `${fpath}/_tags_.js`
+    MuScaT.analyse_file_path    = path.join(fpath, '_tags_.js')
     MuScaT.analyse_folder_path  = fpath
     MuScaT.analyse_name         = data.analyse_name
     MuScaT.preload()
         .then(MuScaT.start_and_run.bind(MuScaT))
-        .then(function(){if(TESTING){Tests.run()}});
+        .then(function(){
+          // Appliquer les préférences
+          Prefs.loadAndDispatchAllPreferences({path: path.join(fpath, 'prefs.json')})
+          // S'il faut lancer les tests
+          if(TESTING){Tests.run()}
+        });
   }else{
     F.error("Il faut choisir un fichier.");
   }

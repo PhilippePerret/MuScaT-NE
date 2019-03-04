@@ -152,4 +152,9 @@ $(document).ready(function(){
       log(`La préférence ${o.id} n'a pas été modifiée. Je ne l'enregistre pas.`)
     }
   })
+
+  // Appelé par le bouton pour sauver les préférences pour l'analyse courante
+  $('#btn-save-for-curanalysis').on('click', () => {
+    ipc.send('save-prefs-current-analysis')
+  })
 })

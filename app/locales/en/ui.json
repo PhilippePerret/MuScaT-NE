@@ -51,7 +51,7 @@
 , "ui-references-lines": "Show guid lines"
 , "ui-btn-save-for-curanalysis": "Save for current analysis"
 , "--- INTERFACE Pannel ---": ""
-, "ui-o-panel-ui": "User Interface"
+, "ui-o-panel-interface": "User Interface"
 , "ui-label-ui-code-fsize": "Code font size"
 , "--- OPTIONS pannel ---": ""
 , "ui-o-panel-options": "Options"

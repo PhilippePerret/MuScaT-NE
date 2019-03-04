@@ -22,11 +22,14 @@ class Analyse {
   set window(v)   { this._window = v }
   get window()    { return this._window }
   get name()      { return path.basename(this.folder) }
-  get tags_path() {
-    return this._tags_path || this.defPath('_tags_path', '_tags_.js')
+  get tagsPath() {
+    return this._tagsPath || this.defPath('_tagsPath', '_tags_.js')
   }
-  get pdf_path()  {
-    return this._pdf_path || this.defPath('_pdf_path', `${this.name}.pdf`)
+  get pdfPath()  {
+    return this._pdfPath || this.defPath('_pdfPath', `${this.name}.pdf`)
+  }
+  get prefsPath() {
+    return this._prefsPath || this.defPath('_prefsPath', 'prefs.json')
   }
 
   // --- Méthodes ---
@@ -42,7 +45,7 @@ class Analyse {
    * Pour le moment, l'analyse est valide si le fichier _tags_.js existe
    */
   is_valid(){
-    let tags_js_exists = fs.existsSync(this.tags_path);
+    let tags_js_exists = fs.existsSync(this.tagsPath);
     if(!tags_js_exists){
       msg_error(this.window, t('not-a-muscat-folder', {motif: t('tags-js-required')}))
     }
@@ -53,7 +56,7 @@ class Analyse {
   // récupération du code.
   save(code){
     let my = this ;
-    fs.writeFile(my.tags_path, code, 'utf8', (err) => {
+    fs.writeFile(my.tagsPath, code, 'utf8', (err) => {
       if (err) throw(err);
       // Pour dire au renderer que l'analyse a été sauvé avec succès
       my.window.webContents.send('analysis-saved')
@@ -70,11 +73,11 @@ class Analyse {
     }
     this.window.webContents.printToPDF(printOptions, (error, data) => {
         if (error) throw error
-        fs.writeFile(my.pdf_path, data, (error) => {
+        fs.writeFile(my.pdfPath, data, (error) => {
           //Silent Print
           if (error) throw error
           // Confirmation du bon export
-          this.window.webContents.send('pdf-successfully-writen', {pdf_path: my.pdf_path});
+          this.window.webContents.send('pdf-successfully-writen', {pdfPath: my.pdfPath});
           console.log('Write PDF successfully.')
         })
     })
@@ -84,7 +87,13 @@ class Analyse {
   openPDF(){
 
   }
-
+  /**
+   * If preferences file exists for the current analysis, we require it
+   */
+  loadPreferencesIfExists(){
+    if(!fs.existsSync(this.prefsPath)){return}
+    global.analysisPrefs = require(this.prefsPath)
+  }
   /**
    * Créer le dossier images, mais seulement s'il n'existe pas
    */
@@ -105,6 +114,10 @@ const Analyser = {
 
     /**
      * Méthode appelée par le bouton 'Ouvrir' pour ouvrir une analyse musicale
+     *
+     * Return the analysis folder path. Or false if the folder is not a
+     * muscat folder. This path will be send via 'tags-loaded' event to the
+     * analysis table to load 1) the tags and 2) the preferences.
      */
   , open: function(win) {
       var my = this
@@ -122,10 +135,9 @@ const Analyser = {
         // On la met en analyse courante
         my.current = new Analyse({folder: folder, window: win});
         if(my.current.is_valid()){
-          console.log("Dossier analyse valide", my.current.folder)
+          my.current.loadPreferencesIfExists()
           return my.current.folder
-        }else{
-          console.log("Dossier analyse invalide")
+        } else {
           my.current = null;
           return false;
         }
@@ -138,7 +150,7 @@ const Analyser = {
       shell.openItem(this.current.folder)
     }
   , askForAnalysisFolder: function(win, msg) {
-      var msg = msg || 'Dossier de l’analyse :' ;
+      var msg = msg || t('analysis-folder:')
       let openOptions = {
           defaultPath:  __dirname
         , message:      msg
@@ -162,7 +174,6 @@ const Analyser = {
       if(!my.current){
         // S'il n'y a pas d'analyse courante, il faut la créer (c'est-à-dire
         // demander son dossier)
-        console.log("Demande de path pour la nouvelle analyse")
         let folder = my.askForAnalysisFolder(win)
         if (!folder){return false}
         my.current = new Analyse({folder: folder, window: win});
@@ -179,6 +190,7 @@ const Analyser = {
       my.current = null;
       win.webContents.send('init-new-analysis')
       global.analysisPrefs = {}
+      win.webContents.send('apply-prefs', {path: null})
     }
     /**
      * Pour exporter l'analyse courante vers PDF

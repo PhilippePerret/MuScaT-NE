@@ -183,6 +183,12 @@ ipc.on('set-pref-prov', (ev, data) => {
     mainWindow.webContents.send('set-pref-prov', data)
   }
 })
+// Pour sauver les préférences propres à l'analyse courante
+ipc.on('save-prefs-current-analysis', (ev) => {
+  if(Analyser.current){
+    MainPrefs.saveAsPrefsCurrentAnalysis(Analyser.current.prefsPath)
+  }
+})
 ipc.on('quit-preferences', (ev) => {
   console.log("Je quitte les préférences depuis le main process")
   MainPrefs.saveIfModified()

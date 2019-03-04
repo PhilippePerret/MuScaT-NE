@@ -56,7 +56,7 @@
 , "ui-references-lines": "Afficher les lignes de références"
 , "ui-btn-save-for-curanalysis": "Sauvegarder pour l'analyse courante"
 , "--- Panneau INTERFACE ---": ""
-, "ui-o-panel-ui": "Interface"
+, "ui-o-panel-interface": "Interface"
 , "ui-label-ui-code-fsize": "Taille du code"
 , "--- Panneau options ---": ""
 , "ui-o-panel-options": "Options"
