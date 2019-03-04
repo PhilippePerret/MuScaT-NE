@@ -14,14 +14,19 @@ const {Pref, DATA_PREFS} = require('./js/app/common/class_Pref.js')
 
 const Prefs = {
     class: 'Prefs'
-  , dataPrefs: null  // = DATA_PREFS
   , analysisPrefs: {}
-  , userPrefs: {}
+  , reset: function(){
+      delete this._userPrefs
+    }
     /**
      * Retourne la valeur de la préférence d'identifiant +pid+
+     * En la prenant, par ordre de priorité :
+     *  - dans le fichier prefs.json de l'analyse (if any)
+     *  - dans le fichier des préférences de l'utilisateur (if any)
+     *  - dans les valeurs par défaut des définitions des préférences
      */
   , getValueOfPref: function(pid){
-      return this.analysisPrefs[pid] || this.userPrefs[pid] || this.dataPrefs[pid].defValue
+      return this.analysisPrefs[pid] || this.userPrefs[pid] || this.dataPrefs[pid] && this.dataPrefs[pid].defValue
     }
 
     /**
@@ -37,43 +42,44 @@ const Prefs = {
         my.analysisPrefs = {}
       }
 
-      // Les préférences de l'utilisateur (if any)
-      // => userPrefs
-      var userPrefsPath = remote.getGlobal('userPrefsPath')
-      if(fs.existsSync(userPrefsPath)){
-        my.userPrefs = require(userPrefsPath)
-      } else {
-        my.userPrefs = {}
-      }
-
-      // Les données générales des préférences
-      my.dataPrefs = DATA_PREFS ; //require('./js/app/common/data_prefs.js')
-
       // Maintenant que toutes les préférences sont chargées, on peut les
       // dispatcher dans l'interface.
       my.dispatchAllPrefs()
     }
   , dispatchAllPrefs: function(){
-      log("[TABLE] Je dispatche les préférences")
       for(var p in DATA_PREFS){
         if(DATA_PREFS[p].monit === true){
           (new Pref(p)).apply(this.getValueOfPref(p))
         }
       }
-      log("[TABLE] FIN dispatch des préférences")
     }
 }
+Object.defineProperties(Prefs, {
+    dataPrefs: {
+      get:function(){return DATA_PREFS}
+    }
+  , userPrefs: {
+      get: function(){
+        if(undefined == this._userPrefs){
+          // Les préférences de l'utilisateur (if any)
+          // => userPrefs
+          var userPrefsPath = remote.getGlobal('userPrefsPath')
+          if(fs.existsSync(userPrefsPath)){
+            this._userPrefs = require(userPrefsPath)
+          } else {
+            this._userPrefs = {}
+          }
+        }
+        return this._userPrefs
+      }
+  }
+})
 
  /**
   * Méthode appelée quand on modifie une préférence dans le panneau des préférences,
   * mais sans encore l'enregistrer.
   */
  IPC.on('set-pref-prov', (ev, data) => {
-   log('[TABLE] -> set-pref-prov')
-   console.log(data)
-   var ipref = new Pref(data.pid)
-   ipref.value = data.value
-   ipref.apply()
-   log(`[TABLE] Je change la préférence ${ipref.id} à ${ipref.value}`)
-   ipref = null
+   // log('[TABLE] -> set-pref-prov')
+   (new Pref(data.pid)).apply(data.value)
  })

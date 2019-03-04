@@ -88,7 +88,7 @@ app.on('ready', () => {
     , height: height
     , width: width - 400
     , x: 400
-    // Pour Linux Ubutu:
+    // Pour Linux Ubuntu:
     , icon: path.resolve(__dirname,'assets','build','osx','logo-icon.png')
   });
 
@@ -107,9 +107,6 @@ app.on('ready', () => {
   // win.toggleDevTools();
 
   winPrefs = MainPrefs.build()
-  winPrefs.on('move', (ev) => {
-    console.log("Ça bouge dans main process")
-  })
   winPrefs.on('beforeunload', (ev) => {
     console.log("On quitte les préférences (beforeunload)")
   })
@@ -132,6 +129,8 @@ app.on('window-all-closed', (event)=>{
 })
 app.on('quit', (event) => {
   console.log('-> quit')
+  // If preferences have changed, we save them.
+  MainPrefs.saveIfModified()
   console.log('<- quit')
 })
 ;

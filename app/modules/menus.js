@@ -68,6 +68,7 @@ const AppMenu = {
                       , path: fpath
                       , analyse_name: path.basename(fpath)
                     })
+                    MainPrefs.set({id: 'last_analysis_path', value: fpath})
                     AppMenu.enableMenus(my.CUR_ANALYSE_MENUS)
                   }
                 }

@@ -4,7 +4,7 @@
  * =======================
  *
  *  Property `monit`    Every change should be made instantly in the
- *                      analysis table.
+ *                      analysis table. And when an analysis is opened.
  *  Property `apref`    If `apref` property is not false, the property is saved in
  *                      the own analysis preferences file. Default: indefined
  *  Property `dom`      If defined, all DOMElement of this class is affected
@@ -17,11 +17,16 @@
 const DATA_PREFS = {
     preference_id: {is: 'data preference_id', apref: false}
 
+    // Dernière analyse
+  , last_analyse_path: {defValue: null, apref: false}
+  , open_last_at_launch: {defValue: false, apref: false}
+
     // --- Fenêtre des préférences ---
   , prefs_window_height:  {defValue: 460, apref: false}
   , prefs_window_width:   {defValue: 800, apref: false}
   , prefs_onglets_width:  {defValue: 150, apref: false}
 
+    //  --- Langue et thème ---
   , lang:             {defValue: 'fr',      monit: true, fct: (v)=>{UI.setLang(v)}}
   , theme:            {defValue: 'muscat',  monit: true, fct: (v) => {UI.setTheme(v)}}
   , default_analysis_folder: {defValue: null, apref: false}

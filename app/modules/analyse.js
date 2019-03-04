@@ -179,6 +179,8 @@ const Analyser = {
         my.current = new Analyse({folder: folder, window: win});
         my.current.buildImagesFolder()
       }
+      // On mémorise cette dernière analyse.
+      global.MainPrefs.set({id: 'last_analysis_path', value: my.current.folder})
       my.current.save(data.code);
     }
     /**

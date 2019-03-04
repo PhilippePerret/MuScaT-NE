@@ -1,8 +1,8 @@
 'use strict'
 
 const { app, BrowserWindow } = require('electron')
-const fs = require('fs')
-const path = require('path')
+const fs    = require('fs')
+const path  = require('path')
 
 let DATA_PREFS = require('../js/app/common/data_prefs.js')
 
@@ -103,7 +103,7 @@ const MainPrefs = {
      *    - dans les valeurs par défaut
      */
   , get: function(pid) {
-      return this.getAnalysisPrefs[pid] || PREFS[pid] || DATA_PREFS[pid].defValue;
+      return this.getAnalysisPrefs[pid] || PREFS[pid] || DATA_PREFS[pid] && DATA_PREFS[pid].defValue;
     }
     /**
      * Définit de façon synchrone la valeur de la préférence +data.id+ en
@@ -117,7 +117,7 @@ const MainPrefs = {
       return true
     }
   , saveIfModified: function(){
-      if(true /* TODO this.modified */){this.save()}
+      if(this.modified){this.save()}
     }
     /**
      * Enregistre les nouvelles valeurs de préférences

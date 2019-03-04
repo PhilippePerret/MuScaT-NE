@@ -34,6 +34,10 @@
           <span id="default_analysis_folder"></span>
           <button id="btn-choose-analysis-folder" type="button" class="locale">...</button>
         </div>
+        <div class="div-pref">
+          <input type="checkbox" id="open_last_at_launch" class="changeable">
+          <label id="open-last-at-launch" class="locale long" for="open_last_at_launch">...</label>
+        </div>
       </div>
 
       <!-- PANNEAU DE L'ASPECT -->
@@ -94,12 +98,12 @@
       <!-- PANNEAU DES OUTILS -->
       <div id="panel-outils" class="panel">
         <div class="div-pref">
-          <input type="checkbox" id="references_lines" value="">
-          <label id="references-lines" class="locale moyen" for="references_lines">...</label>
+          <input type="checkbox" class="changeable" id="references_lines">
+          <label id="references-lines" class="locale long" for="references_lines">...</label>
         </div>
         <div class="div-pref">
-          <input type="checkbox" id="visor" value="">
-          <label for="visor" class="locale moyen" id="show-visor"></label>
+          <input type="checkbox" id="visor" class="changeable">
+          <label for="visor" class="locale long" id="show-visor"></label>
         </div>
       </div>
 
@@ -107,15 +111,11 @@
       <div id="panel-options" class="panel">
         <div class="div-pref">
           <label for="lang" id="lab-lang" class="locale moyen">...</label>
-          <select id="lang"></select>
+          <select id="lang" class="changeable"></select>
         </div>
         <div class="div-pref">
           <label for="animation_speed" id="lab-animation-speed" class="locale moyen">...</label>
-          <select id="animation_speed"></select>
-        </div>
-        <div class="div-pref">
-          <input type="checkbox" id="start_from_last_analysis" value="">
-          <label for="start_from_last_analysis" class="locale long" id="start-from-last"></label>
+          <select id="animation_speed" class="changeable"></select>
         </div>
       </div>
       <!-- /Panneau options -->

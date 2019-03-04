@@ -31,6 +31,8 @@
 
 , "=== PREFERENCES WINDOW ===": ""
 , "Preferences": "Preferences"
+, "--- General pannel ---": ""
+, "ui-open-last-at-launch": "Alway re-open last analysis at launch"
 , "ui-btn-ok": "OK"
 , "ui-show-visor": "Show the visor"
 , "ui-o-panel-general": "General"
