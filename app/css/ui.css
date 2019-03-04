@@ -3,6 +3,7 @@ body {
   padding: 0;
   width: 21.01cm;
   background-color: #DDDDDD;
+  font:caption;
 }
 
 a, a:link, a:hover, a:visited {

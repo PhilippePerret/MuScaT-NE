@@ -7,8 +7,11 @@
 , "thinks-to-align-required": "Choose the tags to align!"
 
 , "analysis-saved":       "Analysis saved."
+, "ana-prefs-file-saved": "Analysis preferences saved."
 , "new-analysis-inited":  "New analysis inited."
 , "confirm-pdf-saved" :   "PDF file saved in %{path}."
+
+, "analysis-folder:": "Analysis folder:"
 
 , "code-lines-added": "Code lines has been added (%{motif}). New code copied in the clipboard to be pasted in your `_tags_.js` file. Do it right now! ;-)"
 , "new-position-tag": "New position for tag %{ref}: %{position}."

@@ -1,0 +1,78 @@
+/* Pour régler les dimensions */
+body {
+  font: caption;
+}
+body * {
+  font-size: 17.5px;
+}
+/* Communs */
+section#onglets-panels,
+section#panels {
+  position: fixed;
+  top: 0;
+}
+
+body {
+  margin:0;
+  padding:0;
+  background-color:#000000;
+  font: caption;
+}
+/* ONGLETS À GAUCHE */
+section#onglets-panels {
+  background-color: #EEEEEE;
+}
+section#onglets-panels ul {
+  list-style: none;
+  font: caption;
+  padding: 1.2em 0;
+  margin: 0;
+}
+section#onglets-panels ul li {
+  padding: 0.32em 1em;
+}
+section#onglets-panels ul li:hover {
+  background-color: #4286f4; /* bleu-mac */
+  color: white;
+}
+section#onglets-panels ul li.selected {
+  background-color: #4fbcf7;
+  color: black;
+  font-weight: bold;
+}
+
+/* PANNEAUX À DROITE */
+section#panels {
+  background-color: #DDDDDD;
+}
+section#panels .panel {
+  display: none;
+  padding: 2em;
+}
+section#panels .panel.visible {
+  display: block;
+}
+section#panels .panel div.div-pref {
+  padding: 0.5em 1em;
+  font: inherit;
+}
+section#panels .panel div.div-pref > div {
+  padding: 0.2em 0;
+}
+section#panels .panel div.div-pref label {
+  display: inline-block;
+}
+section#panels .panel div.div-pref label.moyen {
+  width: 200px;
+}
+section#panels .panel div.div-pref label.long {
+  width: 400px;
+}
+section#footer {
+  position: fixed;
+  bottom: 0;
+  font:caption;
+  text-align: right;
+  padding: 10px 15px;
+  background-color: #CCCCCC;
+}

@@ -63,11 +63,6 @@ const Mover = {
      * Cette méthode démarre le processus de sélection par rectangle.
      */
   , onMouseDown: function(ev){
-      // console.log('click sur la table d’analyse en dehors de tout tag');
-      if(Options.get('rectangle selection')){
-        // La sélection ne se déclenche pas tout de suite
-        this.timerSelection = setTimeout($.proxy(Mover,'startSelection',ev), 1000);
-      };
     }
   , onMouseUp: function(ev){
       // console.log('-> Mover.onMouseUp');

@@ -1,1 +1,0 @@
-OPTIONS.lang.value='fr';

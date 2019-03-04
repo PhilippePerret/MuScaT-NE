@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 // En version nodejs/Electron, ce fichier ne sert plus à rien
 // /*
 //   Script principal

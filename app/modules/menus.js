@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 
 const {app} = require('electron');
 const path  = require('path')
@@ -32,14 +32,16 @@ const AppMenu = {
     }
 
   , MULTISEL_MENUS: ['align-tag-top','align-tag-bottom','align-tag-left','align-tag-right', 'ajust-tags','group-tags']
+  , CUR_ANALYSE_MENUS: ['save-analysis-menu-item', 'export-pdf','open-pdf-file', 'open-folder']
+  , NEW_ANALYSE_MENUS: ['save-analysis-menu-item']
   , setMenusSelectionMultiple: function(on){
       var my = this
       my[on?'enableMenus':'disableMenus'](my.MULTISEL_MENUS)
     }
 
     // Construit le menu et le retourne
-  , menuTemplate: () => {
-      var my = AppMenu ;
+  , menuTemplate: function() {
+      var my = this ;
       my.getMenuData = {}
       var mTemp = [
         {
@@ -50,8 +52,8 @@ const AppMenu = {
                   label: t('new-analysis')
                 , accelerator: 'CmdOrCtrl+N'
                 , click: () => {
-                  AppMenu.disableMenus(['export-pdf','open-pdf-file'])
-                  AppMenu.enableMenus(['save-analysis-menu-item'])
+                  AppMenu.disableMenus(my.CUR_ANALYSE_MENUS)
+                  AppMenu.enableMenus(my.NEW_ANALYSE_MENUS)
                   Analyser.initNew(win)
                 }
               }
@@ -61,17 +63,21 @@ const AppMenu = {
                 , click: () => {
                   let fpath = Analyser.open(win);
                   if (fpath){
-                    // console.log('Dossier choisi : ', fpath);
-                    win.webContents.send('tags-loaded', {
+                    mainWindow.webContents.send('tags-loaded', {
                         properties: 'of the analysis FOLDER'
                       , path: fpath
                       , analyse_name: path.basename(fpath)
                     })
-                    // On active les menus
-                    // var m = mainMenuBar.items[1].submenu.items[3]; //getMenuItemById('menu-save-analysis')
-                    AppMenu.enableMenus(['save-analysis-menu-item','export-pdf','open-pdf-file'])
+                    AppMenu.enableMenus(my.CUR_ANALYSE_MENUS)
                   }
                 }
+              }
+            , {
+                  label: t('show-folder')
+                , id: 'open-folder'
+                , accelerator: 'CmdOrCtrl+Shift+N'
+                , enabled: false
+                , click: () => {Analyser.openFolder()}
               }
             , { type: 'separator' }
             , {
@@ -79,7 +85,9 @@ const AppMenu = {
                 , accelerator: 'CmdOrCtrl+S'
                 , click: () => {
                     win.webContents.send('get-tags-code');
-                  }
+                    // En cas de nouvelle :
+                    AppMenu.enableMenus(my.CUR_ANALYSE_MENUS)
+                }
                 , enabled: false
                 , id: 'save-analysis-menu-item'
               }
@@ -178,6 +186,20 @@ const AppMenu = {
           ]
         }
         , {
+            label: t('Options')
+          , type: 'submenu'
+          , submenu: [
+                {
+                    label: t('Reference-lines')
+                  , type: 'checkbox'
+                  , id: 'references-lines'
+                  , checked: false
+                  , enabled: true
+                  , click: () => {win.webContents.send('toggle-reference-lines')}
+                }
+            ]
+          }
+        , {
             label: t('Help')
           , role: 'help'
           , submenu: [
@@ -190,12 +212,20 @@ const AppMenu = {
           ]
         }
       ];
+      var dataMenuPreferences = {
+            role: 'preferences'
+          , label: t('Preferences')
+          , accelerator: 'CmdOrCtrl+,'
+          , click: () => {MainPrefs.show()}
+        }
       if (process.platform === 'darwin') {
         mTemp.unshift({
             label: app.getName()
+          , type: 'submenu'
           , submenu: [
               { role: 'about' }
             , { type: 'separator' }
+            , dataMenuPreferences
             , { role: 'services' }
             , { type: 'separator' }
             , { role: 'hide' }
@@ -205,6 +235,14 @@ const AppMenu = {
             , { role: 'quit' }
           ]
         })
+      } else if(process.platform === 'win'){
+        // Pour window
+        mTemp[2].submenu.push({type:'separator'})
+        mTemp[2].submenu.push(dataMenuPreferences)
+      } else {
+        // Pour linux
+        mTemp[1].submenu.push({type:'separator'})
+        mTemp[1].submenu.push(dataMenuPreferences)
       }
 
       // Avant de construire le Menu, on mémorise les positions des menus

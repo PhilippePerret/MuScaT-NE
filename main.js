@@ -1,12 +1,6 @@
 'use strict';
 
 /**
- * Stratégie à employer pour passer de l'application Chrome à l'app Electron
- *
- *  - mettre un évènement sur le redimensionnement de la fenêtre
- *  - pouvoir visualiser la partition seule, en plus gros
- *  - Tous les scripts doivent devenir des menus
- *
  *  TODO : voir mousetrap qui a l'air très puissant pour les raccourcis
  *  https://electronjs.org/docs/tutorial/keyboard-shortcuts#raccourcis-dans-un-browserwindow
  */
@@ -21,23 +15,53 @@ const ipc = electron.ipcMain
 const IsMac     = process.platform === 'darwin'
 const IsNotMac  = !IsMac
 
-global.Analyser  = require('./app/modules/analyse.js')
-global.Locales   = require('./app/modules/Locales.js')
-const AppMenu   = require('./app/modules/menus.js')
+
+global.Analyser   = require('./app/modules/analyse.js')
+global.Locales    = require('./app/modules/Locales.js')
+/**
+* Les préférences utilisateur
+*/
+global.userPrefsPath = path.join(app.getPath('userData'), 'user-preferences.json')
+global.analysisPrefs = {}
+global.MainPrefs  = require('./app/modules/main-prefs.js')
+// let Pref = require('./app/common/Pref.js')
+
+// Les menus
+const AppMenu     = require('./app/modules/menus.js')
 
 // La gestion des menus en a besoin
-global.win = null ;
-global.mainMenuBar = null ; // défini au ready
+global.bWindow = null       // Fenêtre background
+global.win = null
+global.mainWindow = null // remplacer 'win' par ça
+global.mainMenuBar = null // défini au ready
 
 // Translation
 global.t = (msg_id, msg_replacements) => {
   return Locales.translate(msg_id, msg_replacements)
 }
+// Pour utiliser indifféremment 'log' dans le main process et dans les
+// renderers.
+global.log = (message) => {
+  console.log(message)
+}
+
+var winPrefs
 
 // var mainMenuBar = new Menu();
 
-app
-.on('ready', () => {
+app.on('ready', () => {
+
+
+  bWindow = new BrowserWindow({
+      title: 'Background'
+    , x: 0
+    , y: 0
+    , width: 400
+    , height: 1000
+    , show: true // quand on veut déboggeur (tous les messages sont envoyés)
+  })
+  bWindow.loadURL(`file://${__dirname}/app/background.html`)
+  bWindow.toggleDevTools();
 
   // On charge la configuration (pour le moment, notamment pour :
   // - la dernière analyse (qui se charge automatiquement))
@@ -57,16 +81,22 @@ app
   // Prend la taille de l'écran entier
   const { width, height } = electron.screen.getPrimaryDisplay().workAreaSize
   // win = new BrowserWindow({ width, height })
-  win = new BrowserWindow({
-    webPreferences: {
-      nodeIntegration: true // parce que j'utilise node.js dans les pages
-    }
-    , height: height, width: width
+  mainWindow = new BrowserWindow({
+      webPreferences: {
+        nodeIntegration: true // parce que j'utilise node.js dans les pages
+      }
+    , height: height
+    , width: width - 400
+    , x: 400
+    // Pour Linux Ubutu:
+    , icon: path.resolve(__dirname,'assets','build','osx','logo-icon.png')
   });
+
+  win  = mainWindow
 
   // Pour l'atteindre depuis le module Analyser
   // Note : maintenant que `win` est global, ça ne doit plus être utile
-  Analyser.win = win;
+  Analyser.win = mainWindow;
 
   // On charge dans la fenêtre créée le fichier principal, c'est-à-dire la
   // table d'analyse.
@@ -75,11 +105,37 @@ app
   // Ajouter cette ligne pour voir les outils de développement
   // TODO Les mettre dans un menu
   // win.toggleDevTools();
-})
-.on('window-all-closed', (event)=>{
+
+  winPrefs = MainPrefs.build()
+  winPrefs.on('move', (ev) => {
+    console.log("Ça bouge dans main process")
+  })
+  winPrefs.on('beforeunload', (ev) => {
+    console.log("On quitte les préférences (beforeunload)")
+  })
+  winPrefs.on('quit', (ev) => {
+    console.log("On quitte les préférences")
+  })
+  winPrefs.on('close', (ev) => {
+    MainPrefs.win = null
+    MainPrefs.built = false
+    console.log("On close les préférences")
+  })
+  winPrefs.on('closed', ()=>{
+    winPrefs = null
+  })
+
+})// Fin de app ready
+
+app.on('window-all-closed', (event)=>{
   if(IsNotMac){app.quit()}
 })
+app.on('quit', (event) => {
+  console.log('-> quit')
+  console.log('<- quit')
+})
 ;
+
 
 // Pour sauver l'analyse courante
 const AnalyserB = Analyser.save.bind(Analyser)
@@ -89,10 +145,53 @@ ipc.on('save-tags', (err, data) => {
 
 // Pour obtenir (de façon synchrone) une valeur de locale
 // Car elles sont gérées au niveau du main process
-ipc
-  .on('get-locale', (event, data) => {
+ipc.on('get-locale', (event, data) => {
     event.returnValue = t(data.id, data.replacements);
   })
-  .on('set-menus-multiselections', (err, yes) => {
+ipc.on('set-menus-multiselections', (err, yes) => {
     AppMenu.setMenusSelectionMultiple(yes)
   })
+ipc.on('log', (ev, data) => {
+    console.log(data.message)
+    if('string' == typeof(data)){data = {message: data}}
+    bWindow.webContents.send('debug', data)
+  })
+
+// Pour essayer de récupérer la fenêtre de la table d'analyse
+ipc.on('get-main-window', (ev) => {
+  ev.returnValue = mainWindow
+})
+/**
+ * === PRÉFÉRENCES ===
+ */
+ipc.on('get-user-prefs', (ev) => {
+  ev.returnValue = MainPrefs.getUserPrefs()
+})
+ipc.on('get-default-prefs', (ev) => {
+  ev.returnValue = MainPrefs.getDefaultPrefs()
+})
+ipc.on('get-pref', (ev, data) => {
+  ev.returnValue = MainPrefs.get(data.id)
+})
+ipc.on('set-pref', (ev, data) => {
+  ev.returnValue = MainPrefs.set(data)
+})
+ipc.on('set-pref-prov', (ev, data) => {
+  log("[MAIN] -> set-pref-prov")
+  if(MainPrefs.isRepercutable(data.pid)){
+    log("[MAIN] isRepercutable = true")
+    mainWindow.webContents.send('set-pref-prov', data)
+  }
+})
+// Pour sauver les préférences propres à l'analyse courante
+ipc.on('save-prefs-current-analysis', (ev) => {
+  if(Analyser.current){
+    MainPrefs.saveAsPrefsCurrentAnalysis(Analyser.current.prefsPath)
+  }
+})
+ipc.on('quit-preferences', (ev) => {
+  console.log("Je quitte les préférences depuis le main process")
+  MainPrefs.saveIfModified()
+  MainPrefs.quit()
+  // app.quit()
+})

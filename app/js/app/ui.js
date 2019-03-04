@@ -31,6 +31,31 @@ const UI = {
       // Pour notamment réagir au click sur la table d'analyse
       Page.observe();
     }
+
+    , toggleVisor: function(visible){
+        log(`Je vais mettre le viseur à ${visible}`)
+      }
+    , toggleReferenceLines: function(visible){
+        log(`Je vais mettre les lignes de référence à ${visible}`)
+      }
+      /**
+       * Application du thème +theme+
+       *
+       * Utilisée principalement au chargement d'une analyse, par les
+       * préférences
+       */
+    , setTheme: function(theme) {
+        log(`Je vais appliquer le thème ${theme}`)
+      }
+      /**
+       * Application de la langue +lang+ à l'interface
+       *
+       * Utilisée principalement au chargement d'une analyse, par les
+       * préférences
+       */
+    , setLang: function(lang) {
+        log(`Je vais appliquer la langue ${lang}`)
+      }
     /**
      * Méthode pour définir l'interface en fonction de la langue
      *

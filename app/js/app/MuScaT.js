@@ -123,7 +123,6 @@ const MuScaT = {
             M.parse_tags_js();
             M.build_tags();
             M.traite_images()
-              .then(M.endLoadingImages)
               .then(ok);
           })
       });
@@ -146,12 +145,6 @@ const MuScaT = {
 
         // Dans tous les cas, on construit les liTags
         ULTags.build();
-        // Si l'option 'lines of reference' a été activée, il faut
-        // ajouter les deux lignes repères
-        if(Options.get('lines of reference')){
-          Page.build_lines_of_reference();
-          Page.assure_lines_draggable();
-        }
         // Si c'est une animation, on est prêt à la jouer
         if(M.animated){M.run_animation()};
         ok();
@@ -167,19 +160,6 @@ const MuScaT = {
         }
       });
     }
-    /**
-      * Finir le chargement
-     */
-  , endLoadingImages: function(){
-      D.dfn('MuScaT#endLoadingImages');
-      return new Promise(function(ok,ko){
-        if (Options.get('crop image')){
-          M.loadModule('cropper').then(function(){M.prepare_crop_image.bind(M)()});
-        };
-        ok();
-      });
-    } // load
-
 
   /**
    * Méthode qui construit les tags sur la table
@@ -205,18 +185,6 @@ const MuScaT = {
       var my = this ;
       // TODO définir la version de l'application
       options_to_tags_js = RC+RC + '// Version X.X' + RC+RC ;
-
-      // Ça ne fonctionne plus comme ça dans la version nodejs/Electron,
-      // et il faut que les options ne s'obtiennent pas de façon asynchrones
-      // if (Options.get('code no option')){
-      // } else {
-      //   if (undefined === options_to_tags_js){
-      //     // Note : c'est vraiment un return, ci-dessus, car c'est un
-      //     // traitement asynchrone (on demande à l'user s'il veut conserver
-      //     // la position de ses lignes repères)
-      //     return Options.to_tags_js();
-      //   };
-      // }
       return options_to_tags_js + 'Tags = `'+ RC + this.full_code() + RC + '`;';
     }
 
@@ -237,7 +205,8 @@ const MuScaT = {
       var my = this, itag ;
       my.check_sequence_image_in_tags();
       my.onEachTagsLine(function(line){
-        CTags.push(new Tag(line)) ;
+        var t = new Tag(line)
+        if(t.isValid){CTags.push(t)}
       });
     }
 
@@ -278,9 +247,9 @@ const MuScaT = {
         , images_list = new Array()
         ;
 
-      var left      = asPixels(Options.get('marge gauche') || DEFAULT_SCORE_LEFT_MARGIN) ;
-      var top_first = asPixels(Options.get('marge haut') || DEFAULT_SCORE_TOP_MARGIN) ;
-      var voffset   = asPixels(Options.get('espacement images')) ;
+      var left      = asPixels(getPref('marge gauche') || DEFAULT_SCORE_LEFT_MARGIN) ;
+      var top_first = asPixels(getPref('marge haut') || DEFAULT_SCORE_TOP_MARGIN) ;
+      var voffset   = asPixels(getPref('espacement images')) ;
 
       // Pour indiquer qu'il faut calculer la position des images en fonction
       // de 1. l'espacement choisi ou par défaut et 2. la hauteur de l'image
@@ -345,7 +314,7 @@ const MuScaT = {
 Object.defineProperties(MuScaT,{
   // Langue de l'application (on la change avec l'option 'lang'/'langue')
   lang:{
-    get: function(){ return Options.get('lang').toLowerCase() } // 'fr par défaut'
+    get: function(){ return Prefs.get('lang').toLowerCase() } // 'fr par défaut'
   }
     /**
      * Le dossier contenant les images de l'analyse courante
