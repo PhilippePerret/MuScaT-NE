@@ -15,7 +15,6 @@ const ipc = electron.ipcMain
 const IsMac     = process.platform === 'darwin'
 const IsNotMac  = !IsMac
 
-console.log(`TEST : ${process.env.TEST}`)
 global.MODE_TEST  = process.env.TEST
 let mode_test_path = path.join(__dirname,'MODE_TEST')
 if(MODE_TEST){
@@ -54,8 +53,6 @@ global.log = (message) => {
 
 var winPrefs
 
-// var mainMenuBar = new Menu();
-
 app.on('ready', () => {
 
 
@@ -77,7 +74,9 @@ app.on('ready', () => {
 
   // On charge les locales
   // console.log('Langue :', process.env.LANG)
-  Locales.load(process.env.LANG ? process.env.LANG.substring(0,2) : 'en');
+  // La langue est soit celle définie dans les variables environnement, soit
+  // celle définie dans les préférences générales de l'user
+  Locales.load(MainPrefs.get('lang'));
 
   // Construction des menus
   // Note : on a besoin de `mainMenuBar` pour retrouver les menus par
@@ -156,6 +155,13 @@ ipc.on('save-tags', (err, data) => {
 ipc.on('get-locale', (event, data) => {
     event.returnValue = t(data.id, data.replacements);
   })
+ipc.on('get-lang', (ev) => {
+  ev.returnValue = Locales.lang
+})
+ipc.on('set-lang', (ev, lang) => {
+  Locales.load(lang)
+  AppMenu.updateLang()
+})
 ipc.on('set-menus-multiselections', (err, yes) => {
     AppMenu.setMenusSelectionMultiple(yes)
   })
@@ -185,9 +191,7 @@ ipc.on('set-pref', (ev, data) => {
   ev.returnValue = MainPrefs.set(data)
 })
 ipc.on('set-pref-prov', (ev, data) => {
-  log("[MAIN] -> set-pref-prov")
   if(MainPrefs.isRepercutable(data.pid)){
-    log("[MAIN] isRepercutable = true")
     mainWindow.webContents.send('set-pref-prov', data)
   }
 })
@@ -198,8 +202,12 @@ ipc.on('save-prefs-current-analysis', (ev) => {
   }
 })
 ipc.on('quit-preferences', (ev) => {
-  console.log("Je quitte les préférences depuis le main process")
+  // console.log("Je quitte les préférences depuis le main process")
   MainPrefs.saveIfModified()
   MainPrefs.quit()
   // app.quit()
+})
+// Pas encore utilisé
+ipc.on('set-current-analysis', (ev, data) => {
+  global.currentAnalysis = data.current_analysis
 })

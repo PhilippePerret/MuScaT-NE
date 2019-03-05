@@ -5,6 +5,10 @@ const path  = require('path')
 
 const AppMenu = {
     class: 'AppMenu'
+    // Pour définir qu'il y a une analyse courante, par exemple quand on
+    // doit changer la langue des menus, mais en gardant la visibilité des
+    // grisures
+  , hasCurrentAnalysis: false
     // L'objet qui va contenir les données des menus
   , getMenuData: null
   , getMenu: function(id) {
@@ -31,6 +35,16 @@ const AppMenu = {
       }
     }
 
+    /**
+     * Méthode qui actualise les menus lorsqu'une autre langue a été choisie
+     * dans les options.
+     */
+  , updateLang: function(){
+      let { Menu } = require('electron')
+      global.mainMenuBar = Menu.buildFromTemplate(this.menuTemplate())
+      Menu.setApplicationMenu(global.mainMenuBar);
+    }
+
   , MULTISEL_MENUS: ['align-tag-top','align-tag-bottom','align-tag-left','align-tag-right', 'ajust-tags','group-tags']
   , CUR_ANALYSE_MENUS: ['save-analysis-menu-item', 'export-pdf','open-pdf-file', 'open-folder']
   , NEW_ANALYSE_MENUS: ['save-analysis-menu-item']
@@ -54,6 +68,7 @@ const AppMenu = {
                 , click: () => {
                   AppMenu.disableMenus(my.CUR_ANALYSE_MENUS)
                   AppMenu.enableMenus(my.NEW_ANALYSE_MENUS)
+                  AppMenu.hasCurrentAnalysis = false
                   Analyser.initNew(win)
                 }
               }
@@ -63,6 +78,7 @@ const AppMenu = {
                 , click: () => {
                   let fpath = Analyser.open(win);
                   if (fpath){
+                    AppMenu.hasCurrentAnalysis = true
                     mainWindow.webContents.send('tags-loaded', {
                         properties: 'of the analysis FOLDER'
                       , path: fpath
@@ -76,8 +92,8 @@ const AppMenu = {
             , {
                   label: t('show-folder')
                 , id: 'open-folder'
-                , accelerator: 'CmdOrCtrl+Shift+N'
-                , enabled: false
+                , accelerator: 'CmdOrCtrl+Shift+O'
+                , enabled: my.hasCurrentAnalysis
                 , click: () => {Analyser.openFolder()}
               }
             , { type: 'separator' }
@@ -88,15 +104,16 @@ const AppMenu = {
                     win.webContents.send('get-tags-code');
                     // En cas de nouvelle :
                     AppMenu.enableMenus(my.CUR_ANALYSE_MENUS)
+                    AppMenu.hasCurrentAnalysis = true
                 }
-                , enabled: false
+                , enabled: my.hasCurrentAnalysis
                 , id: 'save-analysis-menu-item'
               }
             , {type: 'separator'}
             , {label: t('export-pdf'), accelerator: 'CmdOrCtrl+E', click: () => {
                   Analyser.exportToPDF();
                 }
-                , enabled: false
+                , enabled: my.hasCurrentAnalysis
                 , id: 'export-pdf'
               }
             , {label: t('open-pdf'), accelerator: 'CmdOrCtrl+Shift+E', click:()=>{

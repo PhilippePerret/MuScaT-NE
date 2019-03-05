@@ -1,15 +1,10 @@
 'use strict'
 
 const APPFOLDER = path.resolve('.')
-console.log(`APPFOLDER: "${APPFOLDER}"`)
+
+// console.log(`APPFOLDER: "${APPFOLDER}"`)
 let mode_test_path = path.join(APPFOLDER,'MODE_TEST')
 const MODE_TEST = fs.existsSync(mode_test_path)
-
-// En version nodejs/Electron, ce fichier ne sert plus à rien
-// /*
-//   Script principal
-// */
-// // Debug.level = 7;
 
 
 $(document).ready(function(){

@@ -13,6 +13,13 @@ const MSG = {}
 const Locales = {
     class: 'Locales'
     /**
+     * Langue courante de l'application
+     *
+     * Elle est définie par la méthode `load` ci-dessous qui permet de
+     * charger une langue particulière.
+     */
+  , lang: null
+    /**
      * Méthode principale de traduction
      */
   , translate: function(msg_ids, args){
@@ -49,11 +56,13 @@ const Locales = {
      */
   , load: function(lang) {
       // ['messages', 'things', 'ui']
+      this.lang = lang
+      console.log(`[Locales.load] lang = ${lang}`)
+      // Affixes des fichiers de langue
       let l = ['messages', 'things', 'ui'];
       for(var aff of l){
         var p = path.resolve(__dirname,'..','locales',lang,`${aff}.json`)
         Object.assign(MSG, JSON.parse(fs.readFileSync(p)))
-        // Object.assign(MSG, JSON.parse(fs.readFileSync(`./app/locales/${lang}/${aff}.json`)))
       }
     }
 }

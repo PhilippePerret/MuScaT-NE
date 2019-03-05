@@ -27,7 +27,7 @@ const DATA_PREFS = {
   , prefs_onglets_width:  {defValue: 150, apref: false}
 
     //  --- Langue et thème ---
-  , lang:             {defValue: 'fr',      monit: true, fct: (v)=>{UI.setLang(v)}}
+  , lang:             {defValue: (process.env.LANG?process.env.LANG.substring(0,2):'en'), monit: true, fct: (v)=>{UI.setLang(v)}}
   , theme:            {defValue: 'muscat',  monit: true, fct: (v) => {UI.setTheme(v)}}
   , default_analysis_folder: {defValue: null, apref: false}
   , chord_fsize:      {defValue: 17, monit: true, tag: true, dom: '.chord', prop: 'font-size', u: 'px'}

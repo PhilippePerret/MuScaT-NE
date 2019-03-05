@@ -5,14 +5,20 @@ function  write(str) {
 
 const UI = {
     pour: 'virgule'
+
+  , lang: null // la langue courante de l'interface
   , TOP_FIRST_PAGE_END: 1150
   , HEIGTH_PRINTED_PAGE: 1230
 
   , tableAnalyse: null        // {jQuery} La section #tags
 
   , init: function(){
+      this.tableAnalyse = $('#tags');
+      this.ulTags       = $('ul#ultags');
+      this.lang         = ipc.sendSync('get-lang')
+      // Méthodes
       UI.setInterface = UI.setInterface.bind(UI);
-      UI.set_ui = UI.set_ui.bind(UI);
+      UI.localize = UI.localize.bind(UI);
       UI.setInterface();
     }
     /**
@@ -27,7 +33,7 @@ const UI = {
       $('#code-column').css({'height':`${h}px`,'min-height':`${h}px`});
       $('#div-ultags, ul#ultags').css({'height':`${innerH}px`,'min-height':`${innerH}px`});
       // console.log("hauteur de div-code à:", h, innerH);
-      this.set_ui();
+      this.localize();
       // Pour notamment réagir au click sur la table d'analyse
       Page.observe();
     }
@@ -90,7 +96,16 @@ const UI = {
        * préférences
        */
     , setLang: function(lang) {
-        log(`Je vais appliquer la langue ${lang}`)
+        var my = this
+        if(lang !== this.lang){
+          ipc.send('set-lang', lang, (err) => {
+            if (err) throw(err)
+            my.lang = lang
+            log(`La langue a été mise à ${lang}`)
+          })
+        } else {
+          log(`La langue est celle appliquée ('${lang}'), je ne refais pas l'interface.`)
+        }
       }
     /**
      * Méthode pour définir l'interface en fonction de la langue
@@ -98,9 +113,7 @@ const UI = {
      * C'est aussi cette méthode qui dessine des lignes repères pour
      * les sauts de page.
      */
-  , set_ui: function(){
-      this.tableAnalyse = $('#tags');
-      this.ulTags       = $('ul#ultags');
+  , localize: function(){
       // Le mieux, c'est la tournure ci-dessous, où l'on met "t-<id locale>"
       // dans la classe de l'élément, qui renvoie à "<id locale>"
       ['clipboard', 'source-code', 'selected-tags', 'Open', 'the-help', 'sur', 'operations'].forEach(function(tid){
