@@ -16,10 +16,9 @@ $(document).ready(function(){
   Cook.parse();
   UI.init();
 
-  log(`MODE_TEST = ${MODE_TEST}`)
   if(MODE_TEST){
-    // TODO Charger toutes les feuilles de test
-    require(path.join(APPFOLDER,'tests/app/system/Cook.js'))
+    // TODO Charger toutes les feuilles de test et les lancer
+    require(path.join(APPFOLDER,'tests/universal_tests/required.js'))
   }
 
 

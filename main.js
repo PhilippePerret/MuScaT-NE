@@ -107,11 +107,13 @@ app.on('ready', () => {
 
   // On charge dans la fenêtre créée le fichier principal, c'est-à-dire la
   // table d'analyse.
-  win.loadURL(`file://${__dirname}/app/table_analyse.html`);
+  mainWindow.loadURL(`file://${__dirname}/app/table_analyse.html`);
 
   // Ajouter cette ligne pour voir les outils de développement
   // TODO Les mettre dans un menu
-  // win.toggleDevTools();
+  if(MODE_TEST){
+    mainWindow.toggleDevTools();
+  }
 
   winPrefs = MainPrefs.build()
   winPrefs.on('beforeunload', (ev) => {
