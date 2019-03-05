@@ -1,23 +1,28 @@
 {
-    "name": "MuScaT"
-  , "version": "0.1.3"
-  , "description": "MuScaT est une application de mise en forme des analyses musicales. Mais ses utilisations peuvent aller bien au-delà."
-  , "main": "main.js"
-  , "scripts": {
+    "name": "MuScaT",
+    "version": "0.1.3",
+    "description": "MuScaT est une application de mise en forme des analyses musicales. Mais ses utilisations peuvent aller bien au-delà.",
+    "main": "main.js",
+    "scripts": {
           "start": "electron ."
-        , "test": "echo \"Error: no test specified\" && exit 1"
-        , "dmg-osx": "electron-installer-dmg dist/osx/MuScaT-darwin-x64/MuScaT.app dist/MuScaT --icon=assets/build/osx/icon.icns --icon-size=120"
+        , "test": "TEST=true electron ."
         , "pack:osx": "electron-packager . $npm_package_productName --overwrite --out=dist/osx --platform=darwin --arch=x64 --prune=true --icon=assets/build/osx/icon.icns"
-        , "pack:win32": "electron-packager . $npm_package_productName --overwrite --asar --out=dist/win --platform=win32 --arch=ia32"
-        , "pack:win64": "electron-packager . $npm_package_productName --overwrite --asar --out=dist/win --platform=win32 --arch=x64 --icon=assets/build/win/icon.ico"
+        , "pack:win32": "electron-packager . $npm_package_productName --overwrite --asar --out=dist/win32 --platform=win32 --arch=ia32"
+        , "pack:win64": "electron-packager . $npm_package_productName --overwrite --asar --out=dist/win64 --platform=win32 --arch=x64 --icon=assets/build/win/icon.ico"
         , "pack:linux": "electron-packager . $npm_package_productName --overwrite --asar --out=dist/linux --platform=linux --arch=x64 --icon=assets/build/logo-icon-carre.png --prune=true"
-        , "pack": "npm run pack:osx && npm run dmg-osx && npm run pack:linux && npm run pack:win32 && npm run pack:win64"
+        , "setup:win32": "electron-installer-windows --src=dist/win32/MuScaT-win32-ia32/ --dest=dist/win32"
+        , "setup:win64": "electron-installer-windows --src=dist/win64/MuScaT-win64-x64/ --dest=dist/win64"
+        , "setup:osx": "electron-installer-dmg dist/osx/MuScaT-darwin-x64/MuScaT.app dist/osx/MuScaT --icon=assets/build/osx/icon.icns --icon-size=120"
+        , "pack": "npm run pack:osx && npm run pack:linux && npm run pack:win32 && npm run pack:win64"
+        , "setup": "npm run setup:osx && npm run setup:win32 && npm run setup:win64"
     }
-    , "author": "Philippe Perret",
-    "mail": "philippe.perret@yahoo.fr",
-    "license": "GNU",
-    "devDependencies": {
-        "electron": "^4.0.6"
+    , "author": "Philippe Perret"
+    , "mail": "philippe.perret@yahoo.fr"
+    , "license": "GNU"
+    , "devDependencies": {
+        "electron": "^4.0.6",
+        "lint": "^1.1.2",
+        "spectron": "^5.0.0"
     },
     "build": {
         "appId": "app.musical.muscat",

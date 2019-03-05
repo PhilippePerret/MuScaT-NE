@@ -28,5 +28,4 @@ const Cook = {
       my.data[key.trim()] = value.trim() ;
     }
   },
-
 }

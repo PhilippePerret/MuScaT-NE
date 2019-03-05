@@ -15,7 +15,14 @@ const ipc = electron.ipcMain
 const IsMac     = process.platform === 'darwin'
 const IsNotMac  = !IsMac
 
-
+console.log(`TEST : ${process.env.TEST}`)
+global.MODE_TEST  = process.env.TEST
+let mode_test_path = path.join(__dirname,'MODE_TEST')
+if(MODE_TEST){
+  if(!fs.existsSync(mode_test_path)){fs.writeFileSync(mode_test_path, 'YES')}
+}else{
+  if(fs.existsSync(mode_test_path)){fs.unlinkSync(mode_test_path)}
+}
 global.Analyser   = require('./app/modules/analyse.js')
 global.Locales    = require('./app/modules/Locales.js')
 /**
@@ -61,7 +68,7 @@ app.on('ready', () => {
     , show: true // quand on veut déboggeur (tous les messages sont envoyés)
   })
   bWindow.loadURL(`file://${__dirname}/app/background.html`)
-  bWindow.toggleDevTools();
+  // bWindow.toggleDevTools();
 
   // On charge la configuration (pour le moment, notamment pour :
   // - la dernière analyse (qui se charge automatiquement))

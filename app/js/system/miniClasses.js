@@ -11,7 +11,7 @@
 const Surf = function(hdata){
   this.drawn = false ; // pas dessiné
   // Dispatcher les données
-  for(var k in hdata){this[`_${k}`] = hdata[k]};
+  for(var k in hdata){this[`_${k}`] = hdata[k]}
 };
 Surf.prototype.drawIn = function(container){
   this.container = container ;

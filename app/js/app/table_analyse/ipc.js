@@ -90,5 +90,5 @@ IPC
   })
   .on('toggle-reference-lines', (event) => {
     // Pour afficher/masquer les lignes de références
-    Page.toggle_lines_of_reference();
+    UI.toggleReferenceLines()
   })

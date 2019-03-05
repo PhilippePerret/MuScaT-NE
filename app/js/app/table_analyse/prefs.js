@@ -75,6 +75,10 @@ Object.defineProperties(Prefs, {
   }
 })
 
+function getPref(pid){
+  return Prefs.getValueOfPref(pid)
+}
+
  /**
   * Méthode appelée quand on modifie une préférence dans le panneau des préférences,
   * mais sans encore l'enregistrer.

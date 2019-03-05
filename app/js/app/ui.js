@@ -35,10 +35,46 @@ const UI = {
     , toggleVisor: function(visible){
         log(`Je vais mettre le viseur à ${visible}`)
       }
-    , toggleReferenceLines: function(visible){
-        log(`Je vais mettre les lignes de référence à ${visible}`)
+    , showVisorMaybe: function(){
+        if(getPref('visor')){this.showVisorAtCoordonates();}
       }
-      /**
+    , showVisorAtCoordonates: function(){
+        var my = this ;
+        if($('#visor').length == 0){
+          var nod = document.createElement('div');
+          nod.id = 'visor';
+          $('#tags').append(nod);
+        } else { nod = $('#visor')[0] };
+        nod.style.left = this.lastX+'px';
+        nod.style.top  = this.lastY+'px';
+    }
+
+    , toggleReferenceLines: function(visible){
+        if($('#refline_h').is(':visible')){
+          $('#refline_h').hide();
+          $('#refline_v').hide();
+          return
+        }
+        $('#refline_h').show();
+        $('#refline_v').show();
+        $('#refline_h').draggable({axis: 'x', stop:function(ev,ui){Cook.set('hline-left', ui.helper.offset().left)}});
+        $('#refline_v').draggable({axis: 'y', stop:function(ev,ui){Cook.set('vline-top', ui.helper.offset().top)}});
+
+        // La position des lignes repères peut être explicitement définie
+        // dans le fichier _tags_.js (option), ou par cookie, après un premier
+        // déplacement. La définition dans le fichier _tags_.js est toujours
+        // prioritaire.
+        var vpos = Options.get('vertical line offset') || Cook.get('vline-top');
+        if(vpos){$('#refline_v').css('top', vpos + 'px')};
+        var hpos = Options.get('horizontal line offset') || Cook.get('hline-left');
+        if(hpos){$('#refline_h').css('left', hpos + 'px')};
+        this.assure_lines_draggable();
+      }
+      , assure_lines_draggable: function(){
+          $('#refline_h').css('position','fixed');
+          $('#refline_v').css('position','fixed');
+        }
+    /**
        * Application du thème +theme+
        *
        * Utilisée principalement au chargement d'une analyse, par les
